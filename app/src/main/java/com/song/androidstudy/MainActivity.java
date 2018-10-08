@@ -1,23 +1,29 @@
 package com.song.androidstudy;
 
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.song.androidstudy.lifecycle.OneActivity;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "MainActivity";
 
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("native-lib");
     }
+
+    private Button lifecycleBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,35 +42,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
-        tv.setClickable(true);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TestActivity.class));
-            }
-        });
-
-        memoryInfo();
+//        TextView tv = (TextView) findViewById(R.id.sample_text);
+//        tv.setText(stringFromJNI());
+        Log.e(TAG, "onCreate: " + stringFromJNI());
+        lifecycleBtn = ((Button) findViewById(R.id.lifecycle));
+        lifecycleBtn.setOnClickListener(this);
 
     }
 
-    private void memoryInfo() {
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        //最大分配内存
-        int memory = activityManager.getMemoryClass();
-        System.out.println("memory: "+memory);
-        //最大分配内存获取方法2
-        float maxMemory = (float) (Runtime.getRuntime().maxMemory() * 1.0/ (1024 * 1024));
-        //当前分配的总内存
-        float totalMemory = (float) (Runtime.getRuntime().totalMemory() * 1.0/ (1024 * 1024));
-        //剩余内存
-        float freeMemory = (float) (Runtime.getRuntime().freeMemory() * 1.0/ (1024 * 1024));
-        System.out.println("maxMemory: "+maxMemory);
-        System.out.println("totalMemory: "+totalMemory);
-        System.out.println("freeMemory: "+freeMemory);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,4 +78,15 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.lifecycle:
+                startActivity(new Intent(MainActivity.this, OneActivity.class));
+                break;
+
+        }
+
+    }
 }

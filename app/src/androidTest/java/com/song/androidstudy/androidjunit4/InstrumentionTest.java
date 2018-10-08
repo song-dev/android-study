@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class InstrumentionTest {
 
-    Instrumentation instrumentation;
+    private Instrumentation instrumentation;
     private Bundle arguments;
     private Context context;
     private Context targetContext;

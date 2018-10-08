@@ -26,4 +26,11 @@ public class HashTest {
         System.out.println(test.length());
         System.out.println(test);
     }
+
+    @Test
+    public void test_hmacsha1(){
+        String test = HashUtils.hmacsha1Encode("test","e6OXZ8q2cdJQctncOhd4qyT8iR32jZwU");
+        System.out.println(test.length());
+        System.out.println(test);
+    }
 }

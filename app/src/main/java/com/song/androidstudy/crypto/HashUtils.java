@@ -2,6 +2,9 @@ package com.song.androidstudy.crypto;
 
 import java.security.MessageDigest;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 public class HashUtils {
 
 
@@ -64,6 +67,25 @@ public class HashUtils {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(str.getBytes("utf-8"));
             return encodeHex(messageDigest.digest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * hmac-sha1摘要
+     *
+     * @param str 明文
+     * @param key key
+     * @return
+     */
+    public static String hmacsha1Encode(String str, String key) {
+        try {
+            SecretKeySpec signingKey = new SecretKeySpec(key.getBytes(), "HmacSHA1");
+            Mac mac = Mac.getInstance("HmacSHA1");
+            mac.init(signingKey);
+            return encodeHex(mac.doFinal(str.getBytes()));
         } catch (Exception e) {
             e.printStackTrace();
         }

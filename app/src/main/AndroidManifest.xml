@@ -21,8 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".lifecycle.OneActivity" />
-        <activity android:name=".lifecycle.TwoActivity"></activity>
+        <activity
+            android:name=".lifecycle.OneActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"/>
+        <activity android:name=".lifecycle.TwoActivity" />
+        <activity
+            android:name=".lifecycle.DialogTestActivity"
+            android:theme="@style/MyDialogStyle"></activity>
     </application>
 
 </manifest>

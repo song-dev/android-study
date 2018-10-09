@@ -35,6 +35,24 @@ public class OneActivity extends AppCompatActivity {
     }
 
     {
+        // 四种启动模式
+        /**
+         * 1. standard:先进后出，在当前页面启动的activity都和当前页面同一个任务栈，singleTop：如果在栈顶，则不实例化，调用onNewIntent, 更新intent
+         * 2. singleTask：情况1，未指定taskAffinity或者allowTaskReparenting,在当前任务栈查询，如果存在对应activity，则回调onNewIntent，且销毁对应activity以上页面,
+         * 情况2，指定taskAffinity或者allowTaskReparenting，查找对应任务栈，如果查找失败，则创建对应任务栈，并且入栈
+         * 3. singleInstance：和singleTask所有一样，但是直接创建一个新的任务栈，新的任务栈只能存在唯一的activity，只是不断调用onNewIntent
+         * 4. A-->B(singleInstance)-->C,那么A和C在一个任务栈，B在单独任务栈，回退键，C回退，A回退，B回退，说明A和C任务栈在前台，B任务栈在后台
+         * 5. 子线程中或者ApplicationContext也可以启动activity，但是必须开启新的任务栈，也就是设置NEW_TASK的Flag
+         */
+
+        /**
+         * 隐示启动activity的intent-filter配置，一个activitykey配置多个intent-filter
+         * action：动作，只匹配一个即可
+         * category：分类，所有都必须匹配到
+         * date：数据，和action类似
+         * 示例：拨打电话、发送短信等
+         */
+
 
     }
 
@@ -63,6 +81,11 @@ public class OneActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.e(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
     }
 
     @Override

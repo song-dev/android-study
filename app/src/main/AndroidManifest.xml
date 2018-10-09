@@ -23,11 +23,16 @@
         </activity>
         <activity
             android:name=".lifecycle.OneActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity android:name=".lifecycle.TwoActivity" />
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".lifecycle.TwoActivity"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".lifecycle.DialogTestActivity"
-            android:theme="@style/MyDialogStyle"></activity>
+            android:allowTaskReparenting="true"
+            android:launchMode="singleTask"></activity>
+        <!--android:theme="@style/MyDialogStyle"-->
     </application>
 
 </manifest>

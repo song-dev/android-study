@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,8 +36,11 @@
         <activity
             android:name=".lifecycle.DialogTestActivity"
             android:allowTaskReparenting="true"
-            android:launchMode="singleTask"></activity>
-        <!--android:theme="@style/MyDialogStyle"-->
+            android:launchMode="singleTask" />
+        <!-- android:theme="@style/MyDialogStyle" -->
+        <activity
+            android:name=".views.LoginTestActivity"
+            android:label="@string/title_activity_login_test"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".rxjavaretrofit.RetrofitRxjavaActivity">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:rowCount="3">
+
+
+        <Button
+            android:id="@+id/retrofit_get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="retrofit-get" />
+
+        <Button
+            android:id="@+id/retrofit_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="retrofit-post" />
+
+        <Button
+            android:id="@+id/retrofit_get_movie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="get-movie" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+    </GridLayout>
+
+</android.support.constraint.ConstraintLayout>

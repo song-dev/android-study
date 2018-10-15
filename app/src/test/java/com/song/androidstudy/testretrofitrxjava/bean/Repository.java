@@ -1,4 +1,4 @@
-package com.song.androidstudy.net;
+package com.song.androidstudy.testretrofitrxjava.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

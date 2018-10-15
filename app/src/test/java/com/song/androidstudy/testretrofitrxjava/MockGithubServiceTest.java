@@ -1,8 +1,13 @@
-package com.song.androidstudy.net;
+package com.song.androidstudy.testretrofitrxjava;
 
 import android.util.Log;
 
 import com.song.androidstudy.BuildConfig;
+import com.song.androidstudy.testretrofitrxjava.bean.Repository;
+import com.song.androidstudy.testretrofitrxjava.bean.User;
+import com.song.androidstudy.testretrofitrxjava.interceptor.MockInterceptor;
+import com.song.androidstudy.testretrofitrxjava.interceptor.TestInterceptor;
+import com.song.androidstudy.testretrofitrxjava.service.GithubService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,11 +31,11 @@ import static org.junit.Assert.assertEquals;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class MockGithubServiceTest {
 
-    private static final String TAG = MockGithubServiceTest.class.getSimpleName();
+    private static final String TAG = "MockGithubServiceTest";
 
     private static final String JSON_ROOT_PATH = "/json/";
     private String jsonFullPath;
-    GithubService mockGithubService;
+    private GithubService mockGithubService;
 
     @Before
     public void setUp() throws URISyntaxException {
@@ -43,6 +48,7 @@ public class MockGithubServiceTest {
         //定义Http Client,并添加拦截器
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new MockInterceptor(jsonFullPath))
+                .addNetworkInterceptor(TestInterceptor.getHttpLoggingInterceptor())
                 .build();
 
         //设置Http Client
@@ -58,22 +64,22 @@ public class MockGithubServiceTest {
     @Test
     public void mockPublicRepositories() throws Exception {
         Response<List<Repository>> repositoryResponse = mockGithubService.publicRepositories("songsongbrother").execute();
-        Log.e(TAG,repositoryResponse.toString());
+        Log.e(TAG, repositoryResponse.toString());
         assertEquals(repositoryResponse.body().get(5).name, "LoveUT");
     }
 
     @Test
     public void mockFollowingUser() throws Exception {
         Response<List<User>> followingResponse = mockGithubService.followingUser("geniusmart").execute();
-        Log.e(TAG,followingResponse.toString());
-        assertEquals(followingResponse.body().get(0).login,"JakeWharton");
+        Log.e(TAG, followingResponse.toString());
+        assertEquals(followingResponse.body().get(0).login, "JakeWharton");
     }
 
     @Test
     public void mockUser() throws Exception {
         Response<User> userResponse = mockGithubService.user("geniusmart").execute();
-        Log.e(TAG,userResponse.toString());
-        assertEquals(userResponse.body().login,"geniusmart");
+        Log.e(TAG, userResponse.toString());
+        assertEquals(userResponse.body().login, "geniusmart");
     }
 
     @Test

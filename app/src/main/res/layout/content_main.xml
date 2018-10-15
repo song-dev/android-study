@@ -27,6 +27,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="lifecycle" />
+            <Button
+                android:id="@+id/network"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="network" />
 
         </LinearLayout>
 

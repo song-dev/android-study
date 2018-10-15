@@ -1,9 +1,11 @@
-package com.song.androidstudy.net;
+package com.song.androidstudy.testretrofitrxjava;
 
 import android.arch.lifecycle.BuildConfig;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.song.androidstudy.testretrofitrxjava.bean.Repository;
+import com.song.androidstudy.testretrofitrxjava.service.GithubService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +20,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -27,17 +31,22 @@ import static org.junit.Assert.assertTrue;
 public class GithubServiceTest {
 
     private static final String TAG = "GithubServiceTest";
+    private static final String BASE_URL = "https://api.github.com/";
     GithubService githubService;
 
     @Before
     public void setUp() throws URISyntaxException {
         //输出日志
         ShadowLog.stream = System.out;
-        githubService = GithubService.Factory.create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        githubService = retrofit.create(GithubService.class);
     }
 
     /**
-     * 当前
+     * 某个用户公共仓库
      *
      * @throws IOException
      */

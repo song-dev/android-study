@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.song.androidstudy.lifecycle.OneActivity;
 import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
+import com.song.androidstudy.views.DispatchTouchEventActivity;
 
 /**
  * Created by chensongsong on 2018/10/19.
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button lifecycleBtn;
     private Button networkBtn;
+    private Button eventBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.e(TAG, "onCreate: " + stringFromJNI());
         lifecycleBtn = ((Button) findViewById(R.id.lifecycle));
         networkBtn = ((Button) findViewById(R.id.network));
+        eventBtn = ((Button) findViewById(R.id.event));
         lifecycleBtn.setOnClickListener(this);
         networkBtn.setOnClickListener(this);
+        eventBtn.setOnClickListener(this);
 
     }
 
@@ -94,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.network:
                 startActivity(new Intent(MainActivity.this, RetrofitRxjavaActivity.class));
+                break;
+            case R.id.event:
+                startActivity(new Intent(MainActivity.this, DispatchTouchEventActivity.class));
                 break;
 
         }

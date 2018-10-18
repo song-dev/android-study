@@ -18,13 +18,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.song.androidstudy.R;
@@ -46,7 +49,10 @@ public class LoginTestActivity extends AppCompatActivity implements LoaderCallba
          * 3. getTranslationX,位移距离
          * 4. getScrollX，view内容滚动距离
          * 5. getScaleX，缩放
-         * 6.
+         * 6. ViewConfiguration.get(getApplicationContext()).getScaledTouchSlop(); 系统默认TouchSlop 最小滑动居然
+         * 7. VelocityTracker.obtain()速度追踪
+         * 8. scrollTo(绝对滑动)，scrollBy（相对滑动），注意，滑动的是内容，并不是控件
+         * 9. view内部实现Scroller实现滑动
          */
     }
 
@@ -103,6 +109,10 @@ public class LoginTestActivity extends AppCompatActivity implements LoaderCallba
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        ViewConfiguration.get(getApplicationContext()).getScaledTouchSlop();
+        VelocityTracker.obtain();
+        Scroller scroller = new Scroller(this);
 
     }
 

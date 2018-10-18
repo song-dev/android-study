@@ -41,7 +41,8 @@
         <activity
             android:name=".views.LoginTestActivity"
             android:label="@string/title_activity_login_test" />
-        <activity android:name=".rxjavaretrofit.RetrofitRxjavaActivity"></activity>
+        <activity android:name=".rxjavaretrofit.RetrofitRxjavaActivity" />
+        <activity android:name=".views.DispatchTouchEventActivity"></activity>
     </application>
 
 </manifest>

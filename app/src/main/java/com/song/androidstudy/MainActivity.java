@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.song.androidstudy.gestureunlock.GestureUnlockActivity;
 import com.song.androidstudy.lifecycle.OneActivity;
+import com.song.androidstudy.permission.TestPermissionActivity;
 import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
 import com.song.androidstudy.views.event.DispatchTouchEventActivity;
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button lifecycleBtn;
     private Button networkBtn;
     private Button eventBtn;
+    private Button permissionBtn;
+    private Button unlockBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +59,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lifecycleBtn = ((Button) findViewById(R.id.lifecycle));
         networkBtn = ((Button) findViewById(R.id.network));
         eventBtn = ((Button) findViewById(R.id.event));
+        permissionBtn = ((Button) findViewById(R.id.permission));
+        unlockBtn = ((Button) findViewById(R.id.unlock));
         lifecycleBtn.setOnClickListener(this);
         networkBtn.setOnClickListener(this);
         eventBtn.setOnClickListener(this);
+        permissionBtn.setOnClickListener(this);
+        unlockBtn.setOnClickListener(this);
 
     }
 
@@ -101,6 +109,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.event:
                 startActivity(new Intent(MainActivity.this, DispatchTouchEventActivity.class));
+                break;
+            case R.id.permission:
+                startActivity(new Intent(MainActivity.this, TestPermissionActivity.class));
+                break;
+            case R.id.unlock:
+                startActivity(new Intent(MainActivity.this, GestureUnlockActivity.class));
                 break;
 
         }

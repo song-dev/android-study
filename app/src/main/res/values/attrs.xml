@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GestureLockView">
+        <attr name="GestureLockView_default_color" format="color" />
+        <attr name="GestureLockView_select_color" format="color" />
+        <attr name="GestureLockView_line_color" format="color" />
+        <attr name="GestureLockView_max_width" format="dimension" />
+    </declare-styleable>
+</resources>

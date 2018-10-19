@@ -27,16 +27,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="lifecycle" />
+
             <Button
                 android:id="@+id/network"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="network" />
+
             <Button
                 android:id="@+id/event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="event" />
+
+            <Button
+                android:id="@+id/permission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="permission" />
+
+            <Button
+                android:id="@+id/unlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="unlock" />
 
         </LinearLayout>
 

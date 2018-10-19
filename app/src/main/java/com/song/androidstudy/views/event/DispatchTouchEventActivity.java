@@ -1,4 +1,4 @@
-package com.song.androidstudy.views;
+package com.song.androidstudy.views.event;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +34,7 @@ public class DispatchTouchEventActivity extends AppCompatActivity implements Vie
     {
         /**
          * 1. Activity的dispatchTouchEvent先交给window（PhoneWindow）处理，PhoneWindow给绑定的DecorView处理，DecorView继承ViewGroup,故ViewGroup直接处理，所以处理事件为Activity、ViewGroup和View
-         * 3. 消耗ACTION_DOWN事件的控件消耗以后的所有事件（排除activity，若view消耗DOWN事件，最终还是activity处理）
+         * 3. 若消耗DOWN，后续都交给他处理。若拦截某个事件后续事件都交给他处理。
          * 5. 判定子view是否拿到分发事件：动画播放和点击区域是否坐落在子元素区域
          * 6. 如果子view的dispatchTouchEvent为true，则父控件的for循环终止，并且设置好对应的View为Target
          * 7. 当确定了touchEventTarget，后续的move、up事件，都需要经过activity的dispatchTouchEvent，viewgroup的dispatchTouchEvent，view的dispatchTouchEvent到onTouchEvent处理

@@ -39,10 +39,10 @@
             android:launchMode="singleTask" />
         <!-- android:theme="@style/MyDialogStyle" -->
         <activity
-            android:name=".views.LoginTestActivity"
+            android:name=".views.event.LoginTestActivity"
             android:label="@string/title_activity_login_test" />
         <activity android:name=".rxjavaretrofit.RetrofitRxjavaActivity" />
-        <activity android:name=".views.DispatchTouchEventActivity"></activity>
+        <activity android:name=".views.event.DispatchTouchEventActivity"></activity>
     </application>
 
 </manifest>

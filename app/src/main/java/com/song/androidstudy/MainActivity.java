@@ -14,7 +14,7 @@ import android.widget.Button;
 
 import com.song.androidstudy.lifecycle.OneActivity;
 import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
-import com.song.androidstudy.views.DispatchTouchEventActivity;
+import com.song.androidstudy.views.event.DispatchTouchEventActivity;
 
 /**
  * Created by chensongsong on 2018/10/19.

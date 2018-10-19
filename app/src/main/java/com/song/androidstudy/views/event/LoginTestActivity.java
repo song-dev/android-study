@@ -1,4 +1,4 @@
-package com.song.androidstudy.views;
+package com.song.androidstudy.views.event;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

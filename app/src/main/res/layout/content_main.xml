@@ -51,6 +51,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="unlock" />
+            <Button
+                android:id="@+id/bitmap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="bitmap" />
+            <Button
+                android:id="@+id/thread"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="thread" />
 
         </LinearLayout>
 

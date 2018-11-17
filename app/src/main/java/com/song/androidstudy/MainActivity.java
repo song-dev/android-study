@@ -12,11 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.song.androidstudy.bitmap.BitmapActivity;
 import com.song.androidstudy.gestureunlock.GestureUnlockActivity;
 import com.song.androidstudy.lifecycle.OneActivity;
 import com.song.androidstudy.permission.TestPermissionActivity;
 import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
+import com.song.androidstudy.thread.ThreadActivity;
 import com.song.androidstudy.views.event.DispatchTouchEventActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by chensongsong on 2018/10/19.
@@ -30,16 +35,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.loadLibrary("native-lib");
     }
 
-    private Button lifecycleBtn;
-    private Button networkBtn;
-    private Button eventBtn;
-    private Button permissionBtn;
-    private Button unlockBtn;
+    @BindView(R.id.lifecycle) Button lifecycleBtn;
+    @BindView(R.id.network) Button networkBtn;
+    @BindView(R.id.event) Button eventBtn;
+    @BindView(R.id.permission) Button permissionBtn;
+    @BindView(R.id.unlock) Button unlockBtn;
+    @BindView(R.id.thread) Button threadBtn;
+    @BindView(R.id.bitmap) Button bitmapBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,11 +69,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         eventBtn = ((Button) findViewById(R.id.event));
         permissionBtn = ((Button) findViewById(R.id.permission));
         unlockBtn = ((Button) findViewById(R.id.unlock));
+//        bitmapBtn = ((Button) findViewById(R.id.bitmap));
+        threadBtn = ((Button) findViewById(R.id.thread));
         lifecycleBtn.setOnClickListener(this);
         networkBtn.setOnClickListener(this);
         eventBtn.setOnClickListener(this);
         permissionBtn.setOnClickListener(this);
         unlockBtn.setOnClickListener(this);
+        bitmapBtn.setOnClickListener(this);
+        threadBtn.setOnClickListener(this);
 
     }
 
@@ -115,6 +127,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.unlock:
                 startActivity(new Intent(MainActivity.this, GestureUnlockActivity.class));
+                break;
+            case R.id.bitmap:
+                startActivity(new Intent(MainActivity.this, BitmapActivity.class));
+                break;
+            case R.id.thread:
+                startActivity(new Intent(MainActivity.this, ThreadActivity.class));
                 break;
 
         }

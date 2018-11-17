@@ -56,6 +56,7 @@ public class MeasureView extends AppCompatTextView {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         switch (widthMode) {
             case MeasureSpec.EXACTLY:
+                // 精确大小
                 width = MeasureSpec.getSize(widthMeasureSpec);
                 break;
             case MeasureSpec.AT_MOST:
@@ -66,6 +67,7 @@ public class MeasureView extends AppCompatTextView {
         int heightMode = MeasureSpec.getMode(widthMeasureSpec);
         switch (heightMode) {
             case MeasureSpec.EXACTLY:
+                // 精确大小
                 height = MeasureSpec.getSize(widthMeasureSpec);
                 break;
             case MeasureSpec.AT_MOST:

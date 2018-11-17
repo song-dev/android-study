@@ -52,6 +52,13 @@ public class DispatchTouchEventActivity extends AppCompatActivity implements Vie
         eventview = ((EventView) findViewById(R.id.eventview));
         eventLayout.setOnTouchListener(this);
 //        eventLayout.setOnClickListener(this);
+        eventview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e("EventView", "onTouch: ");
+                return false;
+            }
+        });
 
     }
 

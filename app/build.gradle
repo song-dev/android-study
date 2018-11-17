@@ -82,6 +82,9 @@ dependencies {
     // Android Permission
     implementation 'com.github.hotchemi:permissionsdispatcher:3.3.1'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.3.1'
+    // butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
 
 //  ./gradlew test 运行单元测试

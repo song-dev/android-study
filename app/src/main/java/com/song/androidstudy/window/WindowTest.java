@@ -28,10 +28,10 @@ public class WindowTest {
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
         layoutParams.x = 100;
         layoutParams.y = 100;
-        layoutParams.flags = WindowManager.LayoutParams.LAST_SYSTEM_WINDOW;
-        layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
+        layoutParams.flags = WindowManager.LayoutParams.LAST_SYSTEM_WINDOW|WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         windowManager.addView(new TextView(context), layoutParams);
     }
 }

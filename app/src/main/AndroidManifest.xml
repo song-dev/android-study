@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".gestureunlock.GestureUnlockActivity"></activity>
+        <activity android:name=".gestureunlock.GestureUnlockActivity" />
         <activity android:name=".permission.TestPermissionActivity" />
         <activity
             android:name=".MainActivity"
@@ -42,6 +42,10 @@
             android:name=".views.event.LoginTestActivity"
             android:label="@string/title_activity_login_test" />
         <activity android:name=".rxjavaretrofit.RetrofitRxjavaActivity" />
+        <activity android:name=".permission.TestBasePermissionActivity" />
+        <activity android:name=".bitmap.BitmapActivity" />
+        <activity android:name=".thread.ThreadActivity"></activity>
+        <activity android:name=".views.event.DispatchTouchEventActivity"></activity>
     </application>
 
 </manifest>

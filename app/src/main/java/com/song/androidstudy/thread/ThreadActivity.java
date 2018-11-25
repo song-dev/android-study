@@ -33,14 +33,23 @@ public class ThreadActivity extends AppCompatActivity {
     @OnClick(R.id.asynctask)
     public void asynctask() {
         // 开启async
-        new TestAsyncTask().execute("http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
-        new TestAsyncTask().execute("http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+        new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+        // s说明是异步执行任务
+        new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                new TestAsyncTask().execute("http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+                new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+            }
+        }).start();
     }
 
     @OnClick(R.id.intentservice)
-    public void intentservice(){
+    public void intentservice() {
         // 启动IntentService
-        startService(new Intent(this,TestIntentService.class));
+        startService(new Intent(this, TestIntentService.class));
     }
 
     @Override
@@ -59,7 +68,7 @@ public class ThreadActivity extends AppCompatActivity {
         protected void onPreExecute() {
             // 主线程准备工作
             super.onPreExecute();
-            Log.e(TAG, "onPreExecute: " + this.toString());
+            Log.e(TAG, "onPreExecute: " + Thread.currentThread().getName());
         }
 
         @Override
@@ -68,14 +77,19 @@ public class ThreadActivity extends AppCompatActivity {
             publishProgress(0);
             String s = HttpUtils.requestGet(strings[0]);
             publishProgress(100);
-            Log.e(TAG, "doInBackground: " + s);
+            Log.e(TAG, "doInBackground: " + Thread.currentThread().getName());
+            try {
+                Thread.sleep(3000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return s;
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             // 主线程更新
-            Log.e(TAG, "onProgressUpdate: " + values[0] + this.toString());
+            Log.e(TAG, "onProgressUpdate: " + values[0] + Thread.currentThread().getName());
             super.onProgressUpdate(values);
         }
 
@@ -83,6 +97,7 @@ public class ThreadActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             // 回调主线程
             super.onPostExecute(s);
+            Log.e(TAG, "onPostExecute: " + Thread.currentThread().getName());
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
         }
     }

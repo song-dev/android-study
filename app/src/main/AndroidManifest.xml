@@ -46,6 +46,8 @@
         <activity android:name=".bitmap.BitmapActivity" />
         <activity android:name=".thread.ThreadActivity"></activity>
         <activity android:name=".views.event.DispatchTouchEventActivity"></activity>
+
+        <service android:name=".thread.TestIntentService"/>
     </application>
 
 </manifest>

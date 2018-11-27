@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 public class HttpUtils {
 
-    public static String requsetUrl(String urlString) {
+    public static byte[] requsetUrl(String urlString) {
         try {
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -41,9 +41,9 @@ public class HttpUtils {
                     byteArrayOutputStream.write(data, 0, len);
                 }
                 inputStream.close();
-                resultData = new String(byteArrayOutputStream.toByteArray());
+//                resultData = new String(byteArrayOutputStream.toByteArray());
                 byteArrayOutputStream.close();
-                return resultData;
+                return byteArrayOutputStream.toByteArray();
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

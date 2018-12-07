@@ -87,6 +87,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // disklrucache
     implementation 'com.jakewharton:disklrucache:2.0.2'
+    // pem
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
 }
 
 //  ./gradlew test 运行单元测试

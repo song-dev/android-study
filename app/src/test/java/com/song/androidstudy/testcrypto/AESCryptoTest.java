@@ -2,6 +2,7 @@ package com.song.androidstudy.testcrypto;
 
 import com.song.androidstudy.BuildConfig;
 import com.song.androidstudy.crypto.AESUtils;
+import com.song.androidstudy.crypto.Base64;
 import com.song.androidstudy.crypto.HexBinDecOctUtils;
 
 import org.junit.Test;
@@ -19,12 +20,16 @@ public class AESCryptoTest {
     @Test
     public void test_aes128Encryption() {
         String aesKey = "0123456789abcdef";
-        String content = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+        String content = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttsttest";
         System.out.println("明文长度-->" + content.length());
-        byte[] decrypt = AESUtils.encrypt(content, aesKey);
-        String ciphertext = HexBinDecOctUtils.bytesToHex(decrypt);
-        System.out.println("密文长度-->" + ciphertext.length() / 2);
+        System.out.println("明文-->" + content);
+        byte[] encrypt = AESUtils.encrypt(content, aesKey);
+        String ciphertext = Base64.encode(encrypt);
+        System.out.println("密文长度-->" + ciphertext.length());
         System.out.println("ciphertext-->" + ciphertext);
+
+        String decrypt = AESUtils.decrypt(Base64.decode(ciphertext), aesKey);
+        System.out.println("解密明文-->" + decrypt);
     }
 
     /**
@@ -42,9 +47,29 @@ public class AESCryptoTest {
         System.out.println("ciphertext-->" + ciphertext);
     }
 
+    /**
+     * 另外一种的加密和解密
+     *
+     * @throws Exception
+     */
     @Test
-    public void test_length() {
-        String str = "219b586968eb0a65e4b874539bf1d1894edee624c57c430fd39ea63992331c79";
-        System.out.println(str.length());
+    public void test_aes_other() throws Exception {
+
+        String aesKey = "0123456789abcdef";
+        String content = "testtesttesttesttesttesttesttesttesttesttesttesttesttesttestest";
+        System.out.println("明文长度-->" + content.length());
+        System.out.println("明文-->" + content);
+        byte[] encrypto = AESUtils.encrypto(content, aesKey);
+        String ciphertext = HexBinDecOctUtils.bytesToHex(encrypto);
+        System.out.println("密文长度-->" + ciphertext.length() / 2);
+        System.out.println("ciphertext-->" + ciphertext);
+
+        // 解密
+        byte[] decrypto = AESUtils.decrypto(encrypto, aesKey);
+        System.out.println();
+        System.out.println("解密明文-->" + new String(decrypto));
+
+
     }
+
 }

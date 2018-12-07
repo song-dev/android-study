@@ -1,109 +1,158 @@
 package com.song.androidstudy.crypto;
 
+import android.util.Pair;
+
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import org.bouncycastle.util.io.pem.PemObject;
+import org.bouncycastle.util.io.pem.PemReader;
+import org.bouncycastle.util.io.pem.PemWriter;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.security.Key;
 import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.Signature;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 
 /**
  * RSA加密实现，java只支持PKCS8Padding 的公钥私钥对
  */
 public class RSAUtils {
 
-//    public static final String RSA_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMMaeTJ2vnGib79Gz+zCSOgvIf\n" +
-//            "jfrWgrEf8IVDc4HSg/GwWZzELrZPAMSKB/iSn4csKtvG7mXd7/DfDNbmS3wlD6Xr\n" +
-//            "xCgVB9FzuytxAxDQ5Pgygn28cHpaHIBjK3r+PWtCkU+0599QpuJoGJlrDvWCMtwn\n" +
-//            "2nSODhtAXbxC+Rq4SwIDAQAB";
-//
-//    public static final String RSA_PRIVATE_KEY = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMwxp5Mna+caJvv0\n" +
-//            "bP7MJI6C8h+N+taCsR/whUNzgdKD8bBZnMQutk8AxIoH+JKfhywq28buZd3v8N8M\n" +
-//            "1uZLfCUPpevEKBUH0XO7K3EDENDk+DKCfbxwelocgGMrev49a0KRT7Tn31Cm4mgY\n" +
-//            "mWsO9YIy3CfadI4OG0BdvEL5GrhLAgMBAAECgYEAgBb57taA2pTONakrol4+5GMC\n" +
-//            "LYcr/do38Dg58IkJvBvmxeBA9dPzqvVpVMkRRjDqY2tzOIQdxK4aZGEygX6CncEC\n" +
-//            "gwrvJ7Y4MbQhgGIOQfzU4XC/K2eHS4glOoEg008ja0TKTB2tOdz3FhO7ooahKQpp\n" +
-//            "JgbRexApBfCzhwZBoOECQQD6N5iFo3bVN2zzV5EESQRGXq4bY3QQnEmpfxh8zKyv\n" +
-//            "UgTdKuBVKw+pGmlPodOnPOl3kHuQ/Y3gH1L74mvYWLtRAkEA0OnDdxiBmDJL/5VT\n" +
-//            "zWVhbtBs8qJscxrKPihZlNleoDiSrs9byYmO0mwyJy2KeeZXr8SmNz9hqPYhF+Ox\n" +
-//            "d9ha2wJBAOqqqYjsPc7KJIw0W/VA5Zl5wqA9LeVGLm+gmz6wVmQ28Ajc5Xf64r0d\n" +
-//            "4BanFvGJ1wwjnT/mDOFdf15sg+hrj4ECQFn/qqY+122ClXzojq6Ycy3y+kxYrpGz\n" +
-//            "w9adOWJHdl1doctPJ0KeUPnThJOeKd6z3aip9dUtJ9xLFByfiY+QlCsCQC++Wd/J\n" +
-//            "h2XRbikMQ9gPKR5DdlBwHLOwXKvTbpAO4aHVhgWbXPXZufniXW6fqXzloBjyEl8N\n" +
-//            "JdTTt1R+gqMJTmI=";
-    public static final String RSA_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoPwbWBuGqh+kaRT7dnSz\n" +
-        "wlLSO9J/OPt40i9X/nCtsJUTokV5AgcOc4E4cQnW3nP/aoq/CCuZXfCcEDseh4nv\n" +
-        "9hf62JHF2sOH3c04BIgrcqs0EHEsK2Xf/eHXOK8nwcZ+oUD2TL3ompjTyxeQduNs\n" +
-        "GFrKZLXES2HgAx+x6eE1+iT9bQK+UYxgg12FYtHLkY+8Kfa9+qhfSfokTbHkNyry\n" +
-        "w4VzER7hTAdwh2/ZGxjuyBfm6q/GqPpl1+vzunfhhIcXvfqi/qsJSpyLaJFkflPv\n" +
-        "bm3JbJnlvEviBrnMUcWdFFbsNnFxKBFk/ivPBvtg28ZW0zpoDiWdWyCVpeA9HmUa\n" +
-        "fQIDAQAB";
-
-    public static final String RSA_PRIVATE_KEY = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCg/BtYG4aqH6Rp\n" +
-            "FPt2dLPCUtI70n84+3jSL1f+cK2wlROiRXkCBw5zgThxCdbec/9qir8IK5ld8JwQ\n" +
-            "Ox6Hie/2F/rYkcXaw4fdzTgEiCtyqzQQcSwrZd/94dc4ryfBxn6hQPZMveiamNPL\n" +
-            "F5B242wYWspktcRLYeADH7Hp4TX6JP1tAr5RjGCDXYVi0cuRj7wp9r36qF9J+iRN\n" +
-            "seQ3KvLDhXMRHuFMB3CHb9kbGO7IF+bqr8ao+mXX6/O6d+GEhxe9+qL+qwlKnIto\n" +
-            "kWR+U+9ubclsmeW8S+IGucxRxZ0UVuw2cXEoEWT+K88G+2DbxlbTOmgOJZ1bIJWl\n" +
-            "4D0eZRp9AgMBAAECggEAPZqcAChwbPO03712yQq5q1g0OU5A/xZEUvJpEuYdoWA6\n" +
-            "5jL9rofywMKnTaJ9Rh1PlX7IwaCljOxBXHizIxzm5d6hUHTgKOoAOSGKGTnenn/j\n" +
-            "aZNVWroecDIXQQrOBPonhR+t4QofU+G90o8O6l/3Ao7juoxQNKScq7VaSOy00ibw\n" +
-            "A6K8zc1fBYA1xgD6eiJ/iDa5WhbU5diXN7Fea2fabxzhEksfbFmiWskItD5ZTd1a\n" +
-            "ibjQk3V31ubrrZCwOsVeALtUmTcGGP9meTWOv2wwwTPA8/A53uDLsRGF0TDUXHKp\n" +
-            "7DM5MmxUMfUvHzKsZy8zy+EhG75EpsIf6TCe8LMVBQKBgQDU5jKTyqmsrSzsuK48\n" +
-            "ZZeNPcz+C2Caa62hofF89NmNORtjeeBeGVdn21fLKqnP54BgCKCX37Ub+sGZ0iJy\n" +
-            "q6GKw0c1rAJbrult3sP0EZjL5/3YrGb5yo1wXPjpW6m6mtC794AtJ8uE5BBppxGS\n" +
-            "uTUI3vUEBucGbwL462l00I0YBwKBgQDBk18HemuMnq2BddEI8vBl71sBrKmpUil3\n" +
-            "cx+McB4IbQ263/4n0ttT8zexhpGrEXrziJMaxrfgq1ql+H/Bozfg4s0YnQvsw2cX\n" +
-            "8C+TrBnvr6veVtKSnYNV2S/I35BJw5df4Ggzw5+VvvAS0hwCzvXCVPMI57LfQ6t2\n" +
-            "X+p3KNHwWwKBgQCa+/1jw4wjjWn/5i3I//gEtTGu2t93at3apYaj/acF/MWodAfW\n" +
-            "2MHddDsERsmZ9SBqSL2H8i3o8XHQpb24FqOh3ajQNKj+z2VVO28RFWJTRk5wVokc\n" +
-            "XMz8OGJnlvgHRT6hJ3ri5G5vDou4LgxH8JXgIFbjmJbEAzp5tP5vMIcWLwKBgQC4\n" +
-            "pMsjhflqo70a3PfsklcO1Ja5bSpUsWOOZgi03Ak5vlQ3aguzjuTZGgmI07TFOaJP\n" +
-            "BHpVMzIYIzsPT48FdJwLbit2i+7hA66l3dxz/tiqkaXeKnEnmwm47Lcw41dtlR0i\n" +
-            "PhsHLVVe8EdtnG9Nmn4/xOoiF2i+oHzAKFOtIAnJOwKBgQC/WfJvrWIV26AE1MWt\n" +
-            "X7nGtHKxtXOWZocNyxnE1n2GdouSroSCM6kS4fnkoOTBTiy25zTBplwJrAAyB4Ij\n" +
-            "reem4skpCKaUPfueMkfnPDoT6/DLhCGeqo3FxNrWRSuUjKBrgJ9nGJ+lJkFCLeip\n" +
-            "dwSVv71ffvsKM8ol8nziS3r2uQ==";
-
-    private static final String RSA_TFM = "RSA/ECB/PKCS1Padding";
+    /**
+     * 加密解密模式
+     */
+    private static final String RSA_ALGORITHM = "RSA/ECB/PKCS1Padding";
+    /**
+     * 签名模式
+     */
+    private static final String RSA_SIGN_ALGORITHM = "SHA256withRSA";
+    /**
+     * 指定加密算法为RSA
+     */
+    private static final String ALGORITHM = "RSA";
+    /**
+     * 密钥长度，用来初始化
+     */
+    private static final int KEYSIZE = 1024;
+    /**
+     * PKCS1Padding加密快最大长度
+     */
+    public static final int MAX_ENCRYPT_BLOCK = 117;
+    /**
+     * 1024位key解密块最大长度
+     */
+    public static final int MAX_DECRYPT_BLOCK = 128;
 
     /**
-     * 每次加密的字节数，不能超过密钥的长度值减去11(NOPadding限制为秘钥长度), 否则需要手动切割填充
+     * 生成RSA密钥对
      *
-     * @param data
+     * @return
+     */
+    public static Pair<String, String> getRSAPair() {
+        try {
+
+            /** RSA算法要求有一个可信任的随机数源 */
+            SecureRandom secureRandom = new SecureRandom();
+            /** 为RSA算法创建一个KeyPairGenerator对象 */
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
+            /** 利用上面的随机数据源初始化这个KeyPairGenerator对象 */
+            keyPairGenerator.initialize(KEYSIZE, secureRandom);
+            /** 生成密匙对 */
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            /** 得到公钥 */
+            Key publicKey = keyPair.getPublic();
+            /** 得到私钥 */
+            Key privateKey = keyPair.getPrivate();
+            byte[] publicKeyBytes = publicKey.getEncoded();
+            byte[] privateKeyBytes = privateKey.getEncoded();
+
+            String publicKeyBase64 = Base64.encode(publicKeyBytes);
+            String privateKeyBase64 = Base64.encode(privateKeyBytes);
+            return new Pair<>(publicPem(publicKeyBase64), privateKeyBase64);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 获取公钥对象,公钥只支持 X509EncodedKeySpec
+     *
+     * @param publicKeyBase64
+     * @return
+     * @throws InvalidKeySpecException
+     * @throws NoSuchAlgorithmException
+     */
+    public static PublicKey getPublicKey(String publicKeyBase64) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+        X509EncodedKeySpec publicpkcs8KeySpec = new X509EncodedKeySpec(Base64.decode(publicKeyBase64));
+        return keyFactory.generatePublic(publicpkcs8KeySpec);
+    }
+
+    /**
+     * 获取私钥对象,私钥只支持 PKCS8EncodedKeySpec
+     *
+     * @param privateKeyBase64
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PrivateKey getPrivateKey(String privateKeyBase64) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+        PKCS8EncodedKeySpec privatekcs8KeySpec = new PKCS8EncodedKeySpec(Base64.decode(privateKeyBase64));
+        return keyFactory.generatePrivate(privatekcs8KeySpec);
+    }
+
+    /**
+     * 将公钥转换成pkcs8编码的pem格式
+     *
      * @param publicKey
      * @return
+     * @throws Exception
      */
-    public static byte[] encrypt(byte[] data, PublicKey publicKey) {
+    public static String publicPem(String publicKey) {
         try {
-            // 编码前设定编码方式及密钥
-            Cipher cipher = Cipher.getInstance(RSA_TFM);
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            // 传入编码数据并返回编码结果
-            return cipher.doFinal(data);
+            byte[] pubBytes = Base64.decode(publicKey);
+            return pkcs1ToPem(pubBytes, true);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
 
     /**
-     * 私钥加密
+     * 将私钥转换成pkcs1编码的pem格式
      *
-     * @param data
      * @param privateKey
      * @return
+     * @throws Exception
      */
-    public static byte[] encrypt(byte[] data, PrivateKey privateKey) {
+    public static String privatePem(String privateKey) throws Exception {
         try {
-            // 编码前设定编码方式及密钥
-            Cipher cipher = Cipher.getInstance(RSA_TFM);
-            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-            // 传入编码数据并返回编码结果
-            return cipher.doFinal(data);
+            byte[] privBytes = Base64.decode(privateKey);
+            PrivateKeyInfo pkInfo = PrivateKeyInfo.getInstance(privBytes);
+            ASN1Encodable encodeAble = pkInfo.parsePrivateKey();
+            // 由pkcs8转换成pkcs1编码
+            ASN1Primitive primitive = encodeAble.toASN1Primitive();
+            byte[] privateKeyPKCS1 = primitive.getEncoded();
+            return pkcs1ToPem(privateKeyPKCS1, false);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -111,19 +160,65 @@ public class RSAUtils {
     }
 
     /**
-     * 私钥解密
+     * pkcs1格式转换pem格式
      *
-     * @param data
-     * @param privateKey
+     * @param pcks1KeyBytes
+     * @param isPublic
      * @return
+     * @throws Exception
      */
-    public static byte[] decrypt(byte[] data, PrivateKey privateKey) {
+    public static String pkcs1ToPem(byte[] pcks1KeyBytes, boolean isPublic) throws Exception {
+        String type;
+        if (isPublic) {
+            type = "PUBLIC KEY";
+        } else {
+            type = "RSA PRIVATE KEY";
+        }
+        PemObject pemObject = new PemObject(type, pcks1KeyBytes);
+        StringWriter stringWriter = new StringWriter();
+        PemWriter pemWriter = new PemWriter(stringWriter);
+        pemWriter.writeObject(pemObject);
+        pemWriter.close();
+        return stringWriter.toString();
+    }
+
+    /**
+     * pem转换pkcs1格式
+     *
+     * @param base64Key
+     * @return
+     * @throws Exception
+     */
+    public static String pemToPkcs1(String base64Key) throws Exception {
+        PemReader r = new PemReader(new InputStreamReader(new ByteArrayInputStream(base64Key.getBytes("UTF-8"))));
+        PemObject pemObject = r.readPemObject();
+        byte[] encodedKey = pemObject.getContent();
+        return Base64.encode(encodedKey);
+    }
+
+    /**
+     * 使用公钥加密（非分段加密）
+     *
+     * @param content         待加密内容
+     * @param publicKeyBase64 公钥 base64 编码
+     * @return 经过 base64 编码后的字符串
+     */
+    public String encipher(String content, String publicKeyBase64) {
+        return encipher(content, publicKeyBase64, -1);
+    }
+
+    /**
+     * 使用公钥加密（分段加密）
+     *
+     * @param content         待加密内容
+     * @param publicKeyBase64 公钥 base64 编码
+     * @param segmentSize     分段大小,一般小于 keySize/8（段小于等于0时，将不使用分段加密），pkcs1Padding为117
+     * @return 经过 base64 编码后的字符串
+     */
+    public static String encipher(String content, String publicKeyBase64, int segmentSize) {
         try {
-            // 编码前设定编码方式及密钥
-            Cipher cipher = Cipher.getInstance(RSA_TFM);
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            // 传入编码数据并返回编码结果
-            return cipher.doFinal(data);
+            PublicKey publicKey = getPublicKey(publicKeyBase64);
+            return encipher(content, publicKey, segmentSize);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -131,23 +226,179 @@ public class RSAUtils {
     }
 
     /**
-     * 公钥解密
+     * 使用公钥加密（分段加密）
      *
-     * @param data
-     * @param publicKey
-     * @return
+     * @param content         待加密内容
+     * @param publicKeyBase64 公钥 base64 编码
+     * @param segmentSize     分段大小,一般小于 keySize/8（段小于等于0时，将不使用分段加密），pkcs1Padding为117
+     * @return 经过 base64 编码后的字符串
      */
-    public static byte[] decrypt(byte[] data, PublicKey publicKey) {
+    public static String encipher(byte[] content, String publicKeyBase64, int segmentSize) {
         try {
-            // 编码前设定编码方式及密钥
-            Cipher cipher = Cipher.getInstance(RSA_TFM);
-            cipher.init(Cipher.DECRYPT_MODE, publicKey);
-            // 传入编码数据并返回编码结果
-            return cipher.doFinal(data);
+            PublicKey publicKey = getPublicKey(publicKeyBase64);
+            return encipher(content, publicKey, segmentSize);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 分段加密
+     *
+     * @param cipherText  密文
+     * @param key         加密秘钥
+     * @param segmentSize 分段大小，<=0 不分段
+     * @return
+     */
+    public static String encipher(String cipherText, java.security.Key key, int segmentSize) {
+        try {
+            // 用公钥加密
+            byte[] srcBytes = cipherText.getBytes();
+            // Cipher负责完成加密或解密工作，基于RSA
+            Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
+            // 根据公钥，对Cipher对象进行初始化
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] resultBytes = null;
+
+            if (segmentSize > 0) {
+                //分段加密
+                resultBytes = cipherDoFinal(cipher, srcBytes, segmentSize);
+            } else {
+                resultBytes = cipher.doFinal(srcBytes);
+            }
+            return Base64.encode(resultBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 分段加密
+     *
+     * @param cipherText  密文
+     * @param key         加密秘钥
+     * @param segmentSize 分段大小，<=0 不分段
+     * @return
+     */
+    public static String encipher(byte[] cipherText, java.security.Key key, int segmentSize) {
+        try {
+            // 用公钥加密
+            byte[] srcBytes = cipherText;
+
+            // Cipher负责完成加密或解密工作，基于RSA
+            Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
+            // 根据公钥，对Cipher对象进行初始化
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] resultBytes = null;
+
+            if (segmentSize > 0) {
+                resultBytes = cipherDoFinal(cipher, srcBytes, segmentSize);
+            } else {
+                resultBytes = cipher.doFinal(srcBytes);
+            }
+            String base64Str = Base64.encode(resultBytes);
+            return base64Str;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 使用私钥解密（非分段解密）
+     *
+     * @param contentBase64    待加密内容,base64 编码
+     * @param privateKeyBase64 私钥 base64 编码
+     * @return
+     */
+    public static String decipher(String contentBase64, String privateKeyBase64) {
+        return decipher(contentBase64, privateKeyBase64, -1);
+    }
+
+    /**
+     * 使用私钥解密（分段解密）
+     *
+     * @param contentBase64    待加密内容,base64 编码
+     * @param privateKeyBase64 私钥 base64 编码
+     * @param segmentSize      分段大小,一般小于 keySize/8（段小于等于0时，将不使用分段加密），pkcs1Padding为117
+     * @return
+     */
+    public static String decipher(String contentBase64, String privateKeyBase64, int segmentSize) {
+        try {
+            PrivateKey privateKey = getPrivateKey(privateKeyBase64);
+            return decipher(contentBase64, privateKey, segmentSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 分段解密
+     *
+     * @param contentBase64 密文
+     * @param key           解密秘钥
+     * @param segmentSize   分段大小,一般小于 keySize/8（段小于等于0时，将不使用分段加密），pkcs1Padding为117
+     * @return
+     */
+    public static String decipher(String contentBase64, java.security.Key key, int segmentSize) {
+        try {
+            // 用私钥解密
+            byte[] srcBytes = Base64.decode(contentBase64);
+            // Cipher负责完成加密或解密工作，基于RSA
+            Cipher deCipher = Cipher.getInstance(RSA_ALGORITHM);
+            // 根据公钥，对Cipher对象进行初始化
+            deCipher.init(Cipher.DECRYPT_MODE, key);
+            byte[] decBytes = null;
+            if (segmentSize > 0) {
+                decBytes = cipherDoFinal(deCipher, srcBytes, segmentSize);
+            } else {
+                decBytes = deCipher.doFinal(srcBytes);
+            }
+            return new String(decBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 分段大小,每次加密的字节数，不能超过密钥的长度值减去11(NOPadding限制为秘钥长度), 否则需要手动切割填充
+     *
+     * @param cipher
+     * @param srcBytes
+     * @param segmentSize
+     * @return
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws IOException
+     */
+    private static byte[] cipherDoFinal(Cipher cipher, byte[] srcBytes, int segmentSize)
+            throws IllegalBlockSizeException, BadPaddingException, IOException {
+        if (segmentSize <= 0) {
+            throw new RuntimeException("分段大小必须大于0");
+        }
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int inputLen = srcBytes.length;
+        int offSet = 0;
+        byte[] cache;
+        int i = 0;
+        // 对数据分段解密
+        while (inputLen - offSet > 0) {
+            if (inputLen - offSet > segmentSize) {
+                cache = cipher.doFinal(srcBytes, offSet, segmentSize);
+            } else {
+                cache = cipher.doFinal(srcBytes, offSet, inputLen - offSet);
+            }
+            out.write(cache, 0, cache.length);
+            i++;
+            offSet = i * segmentSize;
+        }
+        byte[] data = out.toByteArray();
+        out.close();
+        return data;
     }
 
     /**
@@ -158,11 +409,16 @@ public class RSAUtils {
      * @return
      * @throws Exception
      */
-    public static byte[] sign(byte[] data, PrivateKey privateKey) throws Exception {
-        Signature signature = Signature.getInstance("SHA256withRSA");
-        signature.initSign(privateKey);
-        signature.update(data);
-        return signature.sign();
+    public static String sign(byte[] data, String privateKey) {
+        try {
+            Signature signature = Signature.getInstance(RSA_SIGN_ALGORITHM);
+            signature.initSign(getPrivateKey(privateKey));
+            signature.update(data);
+            return Base64.encode(signature.sign());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -174,39 +430,16 @@ public class RSAUtils {
      * @return
      * @throws Exception
      */
-    public static boolean verify(byte[] data, byte[] sign, PublicKey publicKey) throws Exception {
-        Signature signature = Signature.getInstance("SHA256withRSA");
-        signature.initVerify(publicKey);
-        signature.update(data);
-        return signature.verify(sign);
-    }
-
-    /**
-     * 公钥只支持 X509EncodedKeySpec
-     *
-     * @param key
-     * @return
-     * @throws Exception
-     */
-    public static PublicKey getPublicKey(String key) throws Exception {
-        byte[] keyBytes = Base64.decode(key);
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        return keyFactory.generatePublic(keySpec);
-    }
-
-    /**
-     * 私钥只支持 PKCS8EncodedKeySpec
-     *
-     * @param key
-     * @return
-     * @throws Exception
-     */
-    public static PrivateKey getPrivateKey(String key) throws Exception {
-        byte[] keyBytes = Base64.decode(key);
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        return keyFactory.generatePrivate(keySpec);
+    public static boolean verify(String data, String sign, String publicKey) {
+        try {
+            Signature signature = Signature.getInstance(RSA_SIGN_ALGORITHM);
+            signature.initVerify(getPublicKey(publicKey));
+            signature.update(data.getBytes());
+            return signature.verify(Base64.decode(sign));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

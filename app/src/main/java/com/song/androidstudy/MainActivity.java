@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.song.androidstudy.bitmap.BitmapActivity;
 import com.song.androidstudy.gestureunlock.GestureUnlockActivity;
+import com.song.androidstudy.ipc.IPCTestActivity;
 import com.song.androidstudy.lifecycle.OneActivity;
 import com.song.androidstudy.permission.TestPermissionActivity;
 import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.unlock) Button unlockBtn;
     @BindView(R.id.thread) Button threadBtn;
     @BindView(R.id.bitmap) Button bitmapBtn;
+    @BindView(R.id.aidl) Button aidlBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         unlockBtn.setOnClickListener(this);
         bitmapBtn.setOnClickListener(this);
         threadBtn.setOnClickListener(this);
+        aidlBtn.setOnClickListener(this);
 
     }
 
@@ -133,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.thread:
                 startActivity(new Intent(MainActivity.this, ThreadActivity.class));
+                break;
+            case R.id.aidl:
+                startActivity(new Intent(MainActivity.this, IPCTestActivity.class));
                 break;
 
         }

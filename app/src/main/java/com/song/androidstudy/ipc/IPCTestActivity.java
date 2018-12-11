@@ -57,6 +57,11 @@ public class IPCTestActivity extends AppCompatActivity implements View.OnClickLi
                     public void onServiceConnected(ComponentName name, IBinder service) {
                         myService = ITestAidlInterface.Stub.asInterface(service);
                     }
+
+                    @Override
+                    public void onBindingDied(ComponentName name) {
+                        // 服务挂掉回调
+                    }
                 }, Context.BIND_AUTO_CREATE);
                 break;
             case R.id.btn_invoke:

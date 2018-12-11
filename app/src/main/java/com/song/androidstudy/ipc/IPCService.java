@@ -3,6 +3,7 @@ package com.song.androidstudy.ipc;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -49,6 +50,8 @@ public class IPCService extends Service {
         public String getValue(String s) throws RemoteException {
             Log.e(TAG, "我是服务端，收到信息-->getValue: " + s);
             // 收到服务端的监听
+            // 当前运行在子线程
+            Log.e(TAG, "getValue: " + (Looper.getMainLooper() == Looper.myLooper()));
             return "服务端已经收到消息";
         }
     }

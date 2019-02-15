@@ -1,6 +1,7 @@
 package com.song.androidstudy.rxjavaretrofit;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -84,6 +86,7 @@ public class RetrofitRxjavaActivity extends AppCompatActivity implements View.On
         GtService gtService = retrofit.create(GtService.class);
         Observable<GtApi1Bean> api1 = gtService.getApi1();
         api1.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GtApi1Bean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -93,6 +96,7 @@ public class RetrofitRxjavaActivity extends AppCompatActivity implements View.On
                     @Override
                     public void onNext(GtApi1Bean gtApi1Bean) {
                         Log.e(TAG, "onNext: " + gtApi1Bean.toString());
+                        Log.e(TAG, "onNext: " + Looper.myLooper());
 
                     }
 

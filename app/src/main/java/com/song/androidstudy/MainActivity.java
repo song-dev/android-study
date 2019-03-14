@@ -1,5 +1,6 @@
 package com.song.androidstudy;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -36,14 +37,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.loadLibrary("native-lib");
     }
 
-    @BindView(R.id.lifecycle) Button lifecycleBtn;
-    @BindView(R.id.network) Button networkBtn;
-    @BindView(R.id.event) Button eventBtn;
-    @BindView(R.id.permission) Button permissionBtn;
-    @BindView(R.id.unlock) Button unlockBtn;
-    @BindView(R.id.thread) Button threadBtn;
-    @BindView(R.id.bitmap) Button bitmapBtn;
-    @BindView(R.id.aidl) Button aidlBtn;
+    @BindView(R.id.lifecycle)
+    Button lifecycleBtn;
+    @BindView(R.id.network)
+    Button networkBtn;
+    @BindView(R.id.event)
+    Button eventBtn;
+    @BindView(R.id.permission)
+    Button permissionBtn;
+    @BindView(R.id.unlock)
+    Button unlockBtn;
+    @BindView(R.id.thread)
+    Button threadBtn;
+    @BindView(R.id.bitmap)
+    Button bitmapBtn;
+    @BindView(R.id.aidl)
+    Button aidlBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
         Log.e(TAG, "onCreate: " + stringFromJNI());
+//        Log.e(TAG, "onCreate: " + test());
+        Log.e(TAG, "onCreate: " + getInfo(this));
+//        Log.e(TAG, "onCreate: " + getData(this));
+//        Log.e(TAG, "onCreate: " + getAndroidId(this));
+//        Log.e(TAG, "onCreate: " + getIMEI(this));
         lifecycleBtn = ((Button) findViewById(R.id.lifecycle));
         networkBtn = ((Button) findViewById(R.id.network));
         eventBtn = ((Button) findViewById(R.id.event));
@@ -112,6 +126,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+
+    public native String getData(Context context);
+
+    public native String test();
+
+    public native String getInfo(Context context);
+
+    public native String getAndroidId(Context context);
+
+    public native String getIMEI(Context context);
+
 
     @Override
     public void onClick(View v) {

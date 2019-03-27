@@ -112,7 +112,7 @@ Java_com_song_androidstudy_MainActivity_getInfo(
     result.append("eth0-->" + getCmdResult(cmd));
     result.append("\n");
 
-    cmd = "ifconfig";
+    cmd = "ip -6 addr show";
     result.append("ifconfig-->" + getCmdResult(cmd));
     result.append("\n");
 

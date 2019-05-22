@@ -11,15 +11,15 @@ cmake_minimum_required(VERSION 3.4.1)
 # Gradle automatically packages shared libraries with your APK.
 #将指定的源文件编译为名为 libnative-lib.so 的动态库
 add_library( # Sets the name of the library.
-             native-lib
+        native-lib
 
-             # Sets the library as a shared library.
-             SHARED
+        # Sets the library as a shared library.
+        SHARED
 
-             # Provides a relative path to your source file(s).
-             src/main/cpp/native-lib.cpp )
-add_library(test-lib SHARED src/main/cpp/test.cpp)
-add_library(mobinfo-lib SHARED src/main/cpp/mobinfo-lib.cpp)
+        # Provides a relative path to your source file(s).
+        src/main/cpp/native-lib.cpp)
+#add_library(test-lib SHARED src/main/cpp/test.cpp)
+#add_library(mobinfo-lib SHARED src/main/cpp/mobinfo-lib.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -28,21 +28,22 @@ add_library(mobinfo-lib SHARED src/main/cpp/mobinfo-lib.cpp)
 # completing its build.
 #查找本地 log 库
 find_library( # Sets the name of the path variable.
-              log-lib
+        log-lib
 
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
+        # Specifies the name of the NDK library that
+        # you want CMake to locate.
+        log)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 #将预构建的库添加到自己的原生库
 target_link_libraries( # Specifies the target library.
-                       native-lib
+        native-lib
 
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       ${log-lib}
-                        test-lib
-                        mobinfo-lib)
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib}
+        # test-lib
+        # mobinfo-lib
+        )

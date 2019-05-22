@@ -11,7 +11,7 @@ using namespace std;
 #define TAG "JNI_TAG"
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_song_androidstudy_MainActivity_stringFromJNI(
+Java_com_song_androidstudy_testcpp_TestCppActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -107,7 +107,7 @@ string getCmdResult(string &strCmd) {
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_song_androidstudy_MainActivity_getData(JNIEnv *env, jobject obj, jobject context) {
+Java_com_song_androidstudy_testcpp_TestCppActivity_getData(JNIEnv *env, jobject obj, jobject context) {
     std::string hello = "getData";
     __android_log_print(ANDROID_LOG_ERROR, TAG,
                         "Java_com_song_androidstudy_MainActivity_getData");

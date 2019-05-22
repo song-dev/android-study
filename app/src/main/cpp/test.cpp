@@ -13,7 +13,7 @@
 using namespace std;
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_song_androidstudy_MainActivity_test(
+Java_com_song_androidstudy_testcpp_TestCppActivity_test(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "test";
@@ -36,7 +36,7 @@ Java_com_song_androidstudy_MainActivity_test(
  * tm.getDeviceId();
  */
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_song_androidstudy_MainActivity_getIMEI(JNIEnv *env, jobject context) {
+Java_com_song_androidstudy_testcpp_TestCppActivity_getIMEI(JNIEnv *env, jobject context) {
 
     string error_string = "";
 
@@ -89,7 +89,7 @@ Java_com_song_androidstudy_MainActivity_getIMEI(JNIEnv *env, jobject context) {
  * Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID)
  */
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_song_androidstudy_MainActivity_getAndroidId(JNIEnv *env, jobject context) {
+Java_com_song_androidstudy_testcpp_TestCppActivity_getAndroidId(JNIEnv *env, jobject context) {
 
     jclass contextClass = env->GetObjectClass(context);
     if (contextClass == NULL) {

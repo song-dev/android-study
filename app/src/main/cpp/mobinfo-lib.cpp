@@ -82,7 +82,7 @@ string getJavaShellResult(JNIEnv *env, string &cmd) {
 
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_song_androidstudy_MainActivity_getInfo(
+Java_com_song_androidstudy_testcpp_TestCppActivity_getInfo(
         JNIEnv *env,
         jobject /* this */) {
 

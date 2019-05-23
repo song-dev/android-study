@@ -33,10 +33,9 @@ public class TestCppActivity extends AppCompatActivity {
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
 
-        String info = getInfo(this);
+        String info = getData(this);
         contentTv.setText(info);
 
-        Log.e(TAG, "onCreate: " + stringFromJNI());
         Log.e(TAG, "onCreate: " + info);
     }
 
@@ -44,15 +43,7 @@ public class TestCppActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
 
     public native String getData(Context context);
 
-    public native String test();
-
-    public native String getInfo(Context context);
-
-    public native String getAndroidId(Context context);
-
-    public native String getIMEI(Context context);
 }

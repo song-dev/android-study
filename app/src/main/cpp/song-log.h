@@ -7,6 +7,8 @@
 
 #endif //ANDROIDSTUDY_SONG_LOG_H
 
+#include <android/log.h>
+
 #if 1
 #define TAG "SONG_TAG"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)

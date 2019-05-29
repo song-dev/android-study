@@ -5,13 +5,13 @@
 #ifndef ANDROIDSTUDY_SONG_TOOL_H
 #define ANDROIDSTUDY_SONG_TOOL_H
 
+using namespace std;
+
 #endif //ANDROIDSTUDY_SONG_TOOL_H
 
 #include <string>
 
 #include "song-log.h"
-
-using namespace std;
 
 /**
  * path: 路径

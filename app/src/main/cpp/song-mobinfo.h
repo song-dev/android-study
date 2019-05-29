@@ -8,3 +8,5 @@
 #endif //ANDROIDSTUDY_SONG_MOBINFO_H
 
 #include "song-tool.h"
+
+string getData();

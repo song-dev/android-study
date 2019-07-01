@@ -7,7 +7,8 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_song_androidstudy_testcpp_TestCppActivity_getData(JNIEnv *env, jobject obj,
                                                            jobject context) {
 
-    string data = getData();
+//    string data = getData();
+    string data = "data";
 
     return env->NewStringUTF(data.c_str());
 }

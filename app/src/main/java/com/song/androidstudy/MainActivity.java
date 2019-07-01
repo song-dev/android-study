@@ -2,10 +2,12 @@ package com.song.androidstudy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,6 +85,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         threadBtn.setOnClickListener(this);
         aidlBtn.setOnClickListener(this);
         cppBtn.setOnClickListener(this);
+
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        String deviceId = telephonyManager.getDeviceId();
+//        Log.e(TAG, "onCreate: " + deviceId);
+
+        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"mqBRboGZkQPcAkyk"));
+        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"dxCRMxhQkdGePGnp"));
+        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"360DC_DeviceId_SerialNo"));
 
     }
 

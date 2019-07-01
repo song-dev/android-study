@@ -21,4 +21,12 @@ public class Base64Test {
         byte[] decode = com.song.androidstudy.crypto.Base64.decode(encode);
         System.out.println(new String(decode));
     }
+
+    @Test
+    public void test_smid(){
+        String id = "DudelLhFvYueqT50S+sO9rCJ/9sEC0B8wSzP85mKTnkjvFZYQagXHlJobOHf5EynBJe9+uJijDT2EYYpQVZeU0rg";
+        byte[] decode = com.song.androidstudy.crypto.Base64.decode(id);
+        System.out.println(new String(decode));
+
+    }
 }

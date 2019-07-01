@@ -130,4 +130,15 @@ public class RSATest {
         System.out.println(sign);
 
     }
+
+    @Test
+    public void test_smid() {
+        String key =
+                "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMUBVv"
+                        + "+BdK8bzgV8iTEe25zWhQabmsC8RCo4TAMW79i6ReUymlcmAvTjxq5pxKFyfvRmdsdOL9RDEQlB+6Z/nP8CAwEAAQ==";
+
+        String s = RSAUtils.encipher("267000:3F45E0:EDC3C4feq#%dc87#989(^)78909-=89+1vfiqocxq58*@#~09$", key, RSAUtils.MAX_ENCRYPT_BLOCK);
+        System.out.println(s);
+
+    }
 }

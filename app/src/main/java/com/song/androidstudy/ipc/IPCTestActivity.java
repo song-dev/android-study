@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,6 +20,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IPCTestActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    private static final String TAG = "IPCTestActivity";
 
     @BindView(R.id.btn_bind)
     Button bind;
@@ -35,6 +40,10 @@ public class IPCTestActivity extends AppCompatActivity implements View.OnClickLi
 
         bind.setOnClickListener(this);
         invoke.setOnClickListener(this);
+
+        Log.e(TAG, "onCreate: myUid-->"+ Process.myUid());
+        Log.e(TAG, "onCreate: myPid-->"+ Process.myPid());
+        Log.e(TAG, "onCreate: myTid-->"+ Process.myTid());
     }
 
     @Override

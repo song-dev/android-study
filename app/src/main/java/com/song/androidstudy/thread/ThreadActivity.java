@@ -28,6 +28,8 @@ public class ThreadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread);
         bind = ButterKnife.bind(this);
+
+
     }
 
     @OnClick(R.id.asynctask)

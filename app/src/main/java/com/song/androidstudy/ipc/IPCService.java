@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Process;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -48,6 +49,11 @@ public class IPCService extends Service {
 
         @Override
         public String getValue(String s) throws RemoteException {
+
+            Log.e(TAG, "getValue: myUid-->"+ Process.myUid());
+            Log.e(TAG, "getValue: myPid-->"+ Process.myPid());
+            Log.e(TAG, "getValue: myTid-->"+ Process.myTid());
+
             Log.e(TAG, "我是服务端，收到信息-->getValue: " + s);
             // 收到服务端的监听
             // 当前运行在子线程

@@ -3,6 +3,7 @@ package com.song.androidstudy.thread;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Looper;
+import android.os.Process;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -44,6 +45,10 @@ public class TestIntentService extends IntentService {
         Log.e(TAG, "onHandleIntent: " + (Thread.currentThread() == Looper.getMainLooper().getThread()));
         Log.e(TAG, "onHandleIntent: " + "Thread Name-->" + Thread.currentThread().getName());
         Log.e(TAG, "onHandleIntent: " + Thread.currentThread().getId());
+
+        Log.e(TAG, "onHandleIntent: uid-->"+ Process.myUid());
+        Log.e(TAG, "onHandleIntent: pid-->"+ Process.myPid());
+        Log.e(TAG, "onHandleIntent: tid-->"+ Process.myTid());
 
     }
 

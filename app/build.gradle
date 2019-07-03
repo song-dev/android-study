@@ -51,6 +51,17 @@ android {
         }
     }
 
+//    repositories {
+//        flatDir {
+//            dirs 'libs'
+//        }
+//    }
+
+    sourceSets.main {
+        jniLibs.srcDirs = ['libs']
+        jni.srcDirs = []
+    }
+
 }
 
 dependencies {

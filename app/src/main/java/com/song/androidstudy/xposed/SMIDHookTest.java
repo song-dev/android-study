@@ -22,16 +22,16 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class Test implements IXposedHookLoadPackage {
+public class SMIDHookTest implements IXposedHookLoadPackage {
 
-    private static final String TAG = "Test";
+    private static final String TAG = "SMIDHookTest";
 
     private static Context[] mContext = {null};
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
-        XposedBridge.log("Loaded Test app: " + lpparam.packageName);
-        Log.e(TAG, "handleLoadPackage: " + lpparam.packageName);
+//        XposedBridge.log("Loaded SMIDHookTest app: " + lpparam.packageName);
+//        Log.e(TAG, "handleLoadPackage: " + lpparam.packageName);
 
         if (!lpparam.packageName.equals("com.github.gavin.smid")) {
             return;

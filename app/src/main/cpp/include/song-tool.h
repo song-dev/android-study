@@ -5,9 +5,9 @@
 #ifndef ANDROIDSTUDY_SONG_TOOL_H
 #define ANDROIDSTUDY_SONG_TOOL_H
 
-using namespace std;
+#include <string>
 
-#endif //ANDROIDSTUDY_SONG_TOOL_H
+using std::string;
 
 #include <string>
 
@@ -17,9 +17,9 @@ using namespace std;
  * path: 路径
  * 返回值 1:文件存在; 0:文件不存在
  */
-static int existsFile(const string &path);
+int existsFile(const string &path);
 
-static string readFile(const string &path);
+string readFile(const string &path);
 
 string shellExecute(const string &cmdStr);
 
@@ -29,3 +29,5 @@ string shellExecute(const string &cmdStr);
  * @return
  */
 static string getPackageName(const string &pid);
+
+#endif //ANDROIDSTUDY_SONG_TOOL_H

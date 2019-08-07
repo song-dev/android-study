@@ -2,10 +2,12 @@
 // Created by chensongsong on 2019/5/22.
 //
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef ANDROIDSTUDY_SONG_LOG_H
 #define ANDROIDSTUDY_SONG_LOG_H
-
-#endif //ANDROIDSTUDY_SONG_LOG_H
 
 #include <android/log.h>
 
@@ -22,4 +24,10 @@
 #define LOGE(...)
 #define LOGF(...)
 #define LOGW(...)
+#endif
+
+#endif //ANDROIDSTUDY_SONG_LOG_H
+
+#ifdef __cplusplus
+}
 #endif

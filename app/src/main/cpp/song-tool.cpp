@@ -12,7 +12,7 @@
 #include <sys/system_properties.h>
 #include <wait.h>
 
-#include "song-tool.h"
+#include "include/song-tool.h"
 
 #define BUF_SIZE 512
 #define BUF_SIZE_64 64
@@ -29,7 +29,7 @@ void errorCatch(JNIEnv *env) {
  * path: 路径
  * 返回值 1:文件存在; 0:文件不存在
  */
-static int existsFile(const string &path) {
+int existsFile(const string &path) {
     int access_result = access(path.c_str(), F_OK);
     if (access_result == -1) {
         return 0;
@@ -38,7 +38,7 @@ static int existsFile(const string &path) {
     }
 }
 
-static string readFile(const string &path) {
+string readFile(const string &path) {
 
     if (path.empty()) {
         return "";

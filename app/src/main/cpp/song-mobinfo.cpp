@@ -6,8 +6,8 @@
 #include <string>
 #include <zconf.h>
 
-#include "song-mobinfo.h"
-//#include "song-tool.h"
+#include "include/song-mobinfo.h"
+#include "include/song-tool.h"
 
 string getData() {
     // 导入android头文件，获取对应信息

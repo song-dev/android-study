@@ -18,10 +18,6 @@ android {
             }
         }
 
-        ndk {
-            ldLibs "log"
-        }
-
         multiDexEnabled true
     }
     buildTypes {
@@ -51,15 +47,10 @@ android {
         }
     }
 
-//    repositories {
-//        flatDir {
-//            dirs 'libs'
-//        }
-//    }
-
-    sourceSets.main {
-        jniLibs.srcDirs = ['libs']
-        jni.srcDirs = []
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 
 }

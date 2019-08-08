@@ -22,6 +22,7 @@ import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
 import com.song.androidstudy.testcpp.TestCppActivity;
 import com.song.androidstudy.thread.ThreadActivity;
 import com.song.androidstudy.views.event.DispatchTouchEventActivity;
+import com.song.androidstudy.xposed.InitHookData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        InitHookData.Save(this.getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

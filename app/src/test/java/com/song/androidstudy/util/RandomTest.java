@@ -17,7 +17,6 @@ public class RandomTest {
         System.out.println("bf_key: " + bf_key + "  bf_key length: " + bf_key.length());
         String aes_iv = makeKey(16);
         System.out.println("aes_iv: " + aes_iv + "  aes_iv length: " + aes_iv.length());
-
     }
 
     private String makeKey(int length) {

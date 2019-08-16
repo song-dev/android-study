@@ -20,6 +20,7 @@ public class HexBinDecOctUtils {
         StringBuilder out = new StringBuilder();
         for (int i = 0; i < buf.length; i++) {
             out.append(HEX[(buf[i] >> 4) & 0x0f]).append(HEX[buf[i] & 0x0f]);
+//            out.append(' ');
         }
         return out.toString();
     }

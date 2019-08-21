@@ -107,6 +107,38 @@ public class AESUtils {
     }
 
     /**
+     * 解密AES加密过的字符串
+     *
+     * @param content 密文
+     * @param aesKey  aes
+     * @return 明文
+     */
+    public static byte[] decrypt(byte[] content, String aesKey, byte[] aesIv) {
+        try {
+            IvParameterSpec ivspec = new IvParameterSpec(aesIv);
+            SecretKeySpec secretKey = new SecretKeySpec(aesKey.getBytes(), ALGORITHM);
+            // 创建密码器
+            Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
+            // 初始化为解密模式的密码器
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivspec);
+            return cipher.doFinal(content);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 通过安全随机数生成key加密
      *
      * @param content 需要加密的内容

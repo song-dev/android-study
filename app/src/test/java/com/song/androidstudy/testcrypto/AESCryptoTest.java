@@ -1,17 +1,11 @@
 package com.song.androidstudy.testcrypto;
 
-import com.song.androidstudy.BuildConfig;
 import com.song.androidstudy.crypto.AESUtils;
 import com.song.androidstudy.crypto.Base64;
 import com.song.androidstudy.crypto.HexBinDecOctUtils;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
 public class AESCryptoTest {
 
     /**
@@ -72,6 +66,30 @@ public class AESCryptoTest {
 
     }
 
+    @Test
+    public void test_baidu_device_id() {
+
+        /**
+         * .cuid2   WJH76da+BAjGK/W0K6RXRpRc8WAHtE9G/gl9qnoeFFGdJKTRIHP525dqbsV1KEm8gG72ABdYHmu0LoN6QDLuulCzRJTlvfQ8uB5zurqcGzI=
+         * {"deviceid":"737CDFE919AF2E767C4DB86A393CBE7D","imei":"","ver":2}
+         * .cuid    W+LPOTwt0oTPMp+gopRDJ1uNsVrBQKnb/7R2j6g+UhU4MpIk+ZW8v/eh9L1zSEUigJpL+CCokPuxPtnATkZeow==
+         * 866373029381385=D628F0F3BCE89CB895F535D4BEB3C00A
+         * .fdid    +yEgRDYTC2HW3X6aLzLJ88twt11nWR+ixDwLcCUEvn6g0JcYRlOQMzR3UxWTkbQr
+         * .uuid    5D2D6AF76D75CACF2B40257C7E697BFA
+         */
+
+        String cuid1 = "W+LPOTwt0oTPMp+gopRDJ1uNsVrBQKnb/7R2j6g+UhU4MpIk+ZW8v/eh9L1zSEUigJpL+CCokPuxPtnATkZeow==";
+        byte[] decrypto_cuid1 = AESUtils.decrypt(Base64.decode(cuid1), "30212102dicudiab", "30212102dicudiab".getBytes());
+        System.out.println("cuid1 解密明文-->" + new String(decrypto_cuid1));
+
+        String cuid2 = "WJH76da+BAjGK/W0K6RXRpRc8WAHtE9G/gl9qnoeFFGdJKTRIHP525dqbsV1KEm8gG72ABdYHmu0LoN6QDLuulCzRJTlvfQ8uB5zurqcGzI=";
+        byte[] decrypto_cuid2 = AESUtils.decrypt(Base64.decode(cuid2), "30212102dicudiab", "30212102dicudiab".getBytes());
+        System.out.println("cuid2 解密明文-->" + new String(decrypto_cuid2));
+
+        String ss = "2dbe2877d7acaacbc25a67042a27cad9b6c1cfabfd4ce42678b3d937716bdffa6abe82cdc0cab313b0a3b9d1e56547beae4e4caa3f82c6a32337bef073554573b8df85ec6fa3aab0cfadc72943422ac9b2ea8af53a98cf8dcacfb329446d4ebb43d03d9039e3ed22fa19b0c6729664f4be8a60fed67c34fcfa17cd677a9 9820cfb858f324ce2225572c7aca72cd79f7c9d7cdb5c20885d676aac8ee375 b9e550a57ab10ebcb454aede1566b386a0d0a3ea9a732aa9a0d1d76c853a 18b117d474be72c10bf8b22b2ae6bad232e95b5c6e1d36da12392b4ec437d 8711bcc94973c";
+        System.out.println(ss.length());
+
+    }
 
 
 }

@@ -29,10 +29,6 @@ public class TestCppActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test_cpp);
         ButterKnife.bind(this);
 
-        // Example of a call to a native method
-//        TextView tv = (TextView) findViewById(R.id.sample_text);
-//        tv.setText(stringFromJNI());
-
         String info = getData(this);
         contentTv.setText(info);
 

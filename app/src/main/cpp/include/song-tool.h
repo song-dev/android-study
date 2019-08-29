@@ -6,12 +6,9 @@
 #define ANDROIDSTUDY_SONG_TOOL_H
 
 #include <string>
+#include "song-log.h"
 
 using std::string;
-
-#include <string>
-
-#include "song-log.h"
 
 /**
  * path: 路径

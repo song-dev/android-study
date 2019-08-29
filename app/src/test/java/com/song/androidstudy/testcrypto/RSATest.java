@@ -6,6 +6,13 @@ import com.song.androidstudy.crypto.RSAUtils;
 
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.spec.X509EncodedKeySpec;
+
+import javax.crypto.Cipher;
+
 
 public class RSATest {
 
@@ -141,4 +148,103 @@ public class RSATest {
         System.out.println(s);
 
     }
+
+    @Test
+    public void test_mobile() {
+
+        String data = "{\"data\":{\"custVerification\":{\"apId\":\"451330\",\"apKey\":\"6D089C2BCF970752E0540024817812F6\"}}}";
+
+        try {
+            String s = encryptByPublicKey(data, publicKey_1);
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String encryptData = "H76cNddi/B2U9A8xJNyzMvnrSq/eu0utKrSTRBZIV1V5j3V3SjIhn7joAcaz4OgAYORYG5EJqEaXHiFtsrKwgZ2BASjsE9fgp30jyz/YTHfJhxTQoLtFsjxFDXXCSG5khZUYLCoqGrdaooiOjz0lpdCHwc1s/VWpNsc9wpXizQ0=";
+        try {
+            String s = decryptByPublicKey(encryptData, publicKey_1);
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    String publicKey_1 =
+            "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCSm8IcHZdD6H7fLgvHBKUrIgB8F/TP3RGkEwQDtV5WCo92UzEt/Lx2nu2ttpqH5YyRPxMJ7iElIvhrq1Fty84arvC+rWl4Z6156T4K1mf7Qhdesep0ji3OR0aaZ9S7TQ8bKqMb7VTxpLp7r/pdDbAo8UvRIJTfNZwAJjrsDoDVhwIDAQAB";
+
+
+    //公钥解密
+    public String decryptByPublicKey(String param, String publicKey)
+            throws Exception {
+        byte[] bates = Base64.decode(param);
+        byte[] keyBytes = Base64.decode(publicKey);
+        X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        Key publicK = keyFactory.generatePublic(x509KeySpec);
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.DECRYPT_MODE, publicK);
+        int inputLen = bates.length;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int offSet = 0;
+        byte[] cache;
+        int i = 0;
+        // 对数据分段解密
+        while (inputLen - offSet > 0) {
+            if (inputLen - offSet > 128) {
+                cache = cipher.doFinal(bates, offSet, 128);
+            } else {
+                cache = cipher.doFinal(bates, offSet, inputLen - offSet);
+            }
+            out.write(cache, 0, cache.length);
+            i++;
+            offSet = i * 128;
+        }
+        byte[] decryptedData = out.toByteArray();
+        out.close();
+        String pubDecode = new String(decryptedData, "UTF-8");
+        return pubDecode;
+    }
+
+    //公钥加密
+    public String encryptByPublicKey(String param, String publicKey)
+            throws Exception {
+
+        byte[] data = param.getBytes("UTF-8");
+        if (data == null || publicKey == null) {
+            throw new NullPointerException("encryptByPublicKey data||publicKey is null");
+        }
+
+        byte[] keyBytes = Base64.decode(publicKey);
+        X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        Key publicK = keyFactory.generatePublic(x509KeySpec);
+        // 对数据加密
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, publicK);
+        int inputLen = data.length;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int offSet = 0;
+        byte[] cache;
+
+        int i = 0;
+        // 对数据分段加密
+        while (inputLen - offSet > 0) {
+            if (inputLen - offSet > 117) {
+                cache = cipher.doFinal(data, offSet, 117);
+            } else {
+                cache = cipher.doFinal(data, offSet, inputLen - offSet);
+            }
+
+            out.write(cache, 0, cache.length);
+            i++;
+            offSet = i * 117;
+        }
+
+        byte[] encryptedData = out.toByteArray();
+        out.close();
+        return Base64.encode(encryptedData);
+    }
+
 }

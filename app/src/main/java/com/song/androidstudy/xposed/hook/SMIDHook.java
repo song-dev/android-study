@@ -7,6 +7,7 @@ import android.util.Log;
 import com.song.androidstudy.crypto.Base64;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import javax.crypto.Cipher;
 
@@ -22,7 +23,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class SMIDHook {
 
     private static final String TAG = "SMIDHook";
-    private static final String PACKAGE_NAME = "com.github.gavin.smid";
+    //    private static final String PACKAGE_NAME = "com.github.gavin.smid";
+    private static final String PACKAGE_NAME = "com.song.testcrackdeviceid";
 
     public SMIDHook(XC_LoadPackage.LoadPackageParam lpparam) {
 
@@ -31,6 +33,7 @@ public class SMIDHook {
             hashHook(lpparam);
             systemSettingHook(lpparam);
             fileHook(lpparam);
+            jsonHook(lpparam);
         }
 
     }
@@ -225,6 +228,55 @@ public class SMIDHook {
                 super.beforeHookedMethod(param);
             }
         });
+    }
+
+    private void jsonHook(XC_LoadPackage.LoadPackageParam lpparam) {
+
+        XposedHelpers.findAndHookMethod("org.json.JSONObject", lpparam.classLoader, "toString", new XC_MethodHook() {
+
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                String result = (String) param.getResult();
+                Log.e(TAG, "JSONObject.toString result: " + result);
+                super.afterHookedMethod(param);
+            }
+        });
+        XposedHelpers.findAndHookMethod("org.json.JSONObject", lpparam.classLoader, "toString", int.class, new XC_MethodHook() {
+
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                String result = (String) param.getResult();
+                Log.e(TAG, "JSONObject.toString result: " + result);
+                super.afterHookedMethod(param);
+            }
+        });
+//        XposedHelpers.findAndHookMethod("org.json.JSONObject", lpparam.classLoader, "put", String.class, Object.class, new XC_MethodHook() {
+//
+//            @Override
+//            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+//                JSONObject jsonObject = (JSONObject) param.getResult();
+//                Log.e(TAG, "JSONObject.put result: " + jsonObject.toString());
+//                super.afterHookedMethod(param);
+//            }
+//        });
+
+        XposedHelpers.findAndHookConstructor("org.json.JSONObject", lpparam.classLoader, String.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                String arg = (String) param.args[0];
+                Log.e(TAG, "jsonHook new JSONObject param: " + arg);
+                super.beforeHookedMethod(param);
+            }
+        });
+        XposedHelpers.findAndHookConstructor("org.json.JSONObject", lpparam.classLoader, Map.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                Map arg = (Map) param.args[0];
+                Log.e(TAG, "jsonHook new JSONObject param: " + arg.toString());
+                super.beforeHookedMethod(param);
+            }
+        });
+
     }
 
 

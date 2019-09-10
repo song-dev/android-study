@@ -2,12 +2,10 @@ package com.song.androidstudy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +20,6 @@ import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
 import com.song.androidstudy.testcpp.TestCppActivity;
 import com.song.androidstudy.thread.ThreadActivity;
 import com.song.androidstudy.views.event.DispatchTouchEventActivity;
-import com.song.androidstudy.xposed.InitHookData;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        InitHookData.Save(this.getApplicationContext());
+//        InitHookData.Save(this.getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        String deviceId = telephonyManager.getDeviceId();
 //        Log.e(TAG, "onCreate: " + deviceId);
 
-        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"mqBRboGZkQPcAkyk"));
-        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"dxCRMxhQkdGePGnp"));
-        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"360DC_DeviceId_SerialNo"));
+//        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"mqBRboGZkQPcAkyk"));
+//        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"dxCRMxhQkdGePGnp"));
+//        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"360DC_DeviceId_SerialNo"));
 
     }
 

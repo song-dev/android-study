@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
+ * 分别示例栈溢出，堆溢出，字符串常量池存储F
  * Created by chensongsong on 2019/9/2.
  */
 public class LoopMethodTest {
@@ -76,6 +77,9 @@ public class LoopMethodTest {
 
         String s2 = new StringBuffer().append("Ja").append("va").toString();
         System.out.println(s2 == s2.intern());
+
+        System.out.println("test" == "test");
+
 
     }
 }

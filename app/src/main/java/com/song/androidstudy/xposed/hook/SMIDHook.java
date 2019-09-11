@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.song.androidstudy.crypto.Base64;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -219,6 +220,41 @@ public class SMIDHook {
             }
         });
 
+        XposedHelpers.findAndHookConstructor("java.io.File", lpparam.classLoader, String.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                String arg = (String) param.args[0];
+                Log.e(TAG, "fileHook new File param: " + arg);
+                super.beforeHookedMethod(param);
+            }
+        });
+        XposedHelpers.findAndHookConstructor("java.io.File", lpparam.classLoader, String.class, int.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                String arg = (String) param.args[0];
+                int arg1 = (int) param.args[1];
+                Log.e(TAG, "fileHook new File param: " + arg + "#" + arg1);
+                super.beforeHookedMethod(param);
+            }
+        });
+        XposedHelpers.findAndHookConstructor("java.io.File", lpparam.classLoader, String.class, File.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                String arg = (String) param.args[0];
+                File arg1 = (File) param.args[1];
+                Log.e(TAG, "fileHook new File param: " + arg + "#" + arg1.getAbsolutePath());
+                super.beforeHookedMethod(param);
+            }
+        });
+        XposedHelpers.findAndHookConstructor("java.io.File", lpparam.classLoader, File.class, String.class, new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                File arg = (File) param.args[0];
+                String arg1 = (String) param.args[1];
+                Log.e(TAG, "fileHook new File param: " + arg.getAbsolutePath() + "#" + arg1);
+                super.beforeHookedMethod(param);
+            }
+        });
         XposedHelpers.findAndHookConstructor("java.io.File", lpparam.classLoader, String.class, String.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -237,7 +273,34 @@ public class SMIDHook {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 String result = (String) param.getResult();
-                Log.e(TAG, "JSONObject.toString result: " + result);
+                printLongString(result, "JSONObject.toString result: ");
+
+                // 篡改第二次请求数据
+                // mac,imei,androidid
+                if (result.startsWith("{\"acc\":{")) {
+
+                    String temp = result;
+
+                    // 篡改 mac
+                    temp = temp.replace("d4bbc8527b21", "d4cbc8727c32");
+                    temp = temp.replace("ec:c2:fd:06:75:fb", "df:c3:fd:06:75:42");
+                    // 篡改 imei
+                    temp = temp.replace("867478046879276", "867578089879244");
+                    temp = temp.replace("85601415363864770017", "85301445363864770038");
+                    temp = temp.replace("018767445483615", "018705445489654");
+                    // 篡改 android_id
+                    temp = temp.replace("13dcab62cd8523a1", "13dcab72cd9523b3");
+
+//                    temp = temp.replace("988751ca8e09f518984ff7b0bc98753a", "988751ca8e09f518984ff7b0bc98753b");
+                    temp = temp.replace("201909111614071a82756ef7b6821065b4c98b2f6987c2015665e83b088004", "20190911181619e3f1be5b11451df0214d4ef1ee5a1d3b01f1801e392bea38");
+//                    temp = temp.replace("5907320832", "5907320858");
+//                    temp = temp.replace("31257739264", "31257739268");
+
+                    temp = temp.replace("\\/data\\/user\\/0\\/io.va.exposed\\/virtual\\/data\\/user\\/0\\/com.song.testcrackdeviceid\\/files", "/data/user/0/com.song.testcrackdeviceid/files");
+
+                    param.setResult(temp);
+                }
+
                 super.afterHookedMethod(param);
             }
         });
@@ -246,7 +309,8 @@ public class SMIDHook {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 String result = (String) param.getResult();
-                Log.e(TAG, "JSONObject.toString result: " + result);
+//                Log.e(TAG, "JSONObject.toString result: " + result);
+                printLongString(result, "JSONObject.toString result: ");
                 super.afterHookedMethod(param);
             }
         });
@@ -263,8 +327,9 @@ public class SMIDHook {
         XposedHelpers.findAndHookConstructor("org.json.JSONObject", lpparam.classLoader, String.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                String arg = (String) param.args[0];
-                Log.e(TAG, "jsonHook new JSONObject param: " + arg);
+                String result = (String) param.args[0];
+//                Log.e(TAG, "jsonHook new JSONObject param: " + result);
+                printLongString(result, "jsonHook new JSONObject param: ");
                 super.beforeHookedMethod(param);
             }
         });
@@ -273,10 +338,39 @@ public class SMIDHook {
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 Map arg = (Map) param.args[0];
                 Log.e(TAG, "jsonHook new JSONObject param: " + arg.toString());
+                printLongString(arg.toString(), "jsonHook new JSONObject param: ");
                 super.beforeHookedMethod(param);
             }
         });
 
+    }
+
+    private final static int PRINT_SIZE = 3800;
+
+    /**
+     * 打印超长字符串
+     *
+     * @param data
+     */
+    private void printLongString(String data, String tag) {
+
+        int len = data.length();
+
+        if (len > PRINT_SIZE) {
+
+            int n = 0;
+
+            while ((len - n) > PRINT_SIZE) {
+                String s = data.substring(n, PRINT_SIZE);
+                Log.e(TAG, tag + s);
+                n += PRINT_SIZE;
+            }
+
+            Log.e(TAG, tag + data.substring(n));
+
+        } else {
+            Log.e(TAG, tag + data);
+        }
     }
 
 

@@ -20,7 +20,39 @@ public class TestClassClinit {
 
         // 被动引用演示，编译阶段常量被存储在常量池中
         System.out.println(SubClass.TEST);
+
+        // <clinit>() 方法执行顺序为父类静态语句块优先
+        System.out.println(SubFather.b);
     }
+
+}
+
+class Father {
+
+    public static int a = 1;
+
+    static {
+        // 父类静态语句块优先子类静态属性执行
+        a = 2;
+    }
+
+}
+
+class SubFather extends Father {
+
+    public static int b = a;
+
+}
+
+
+class TestClassVariate {
+
+    static {
+        i = 13; // 给变量赋值正常编译通过
+//         System.out.println(i); // illegal forward reference 非法向前引用
+    }
+
+    static int i = 12;
 
 }
 

@@ -34,6 +34,12 @@
             android:layout_height="wrap_content"
             android:text="intentservice" />
 
+        <Button
+            android:id="@+id/count_down_latch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CountDownLatch" />
+
     </GridLayout>
 
 </android.support.constraint.ConstraintLayout>

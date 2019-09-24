@@ -35,15 +35,15 @@ public class ThreadActivity extends AppCompatActivity {
     @OnClick(R.id.asynctask)
     public void asynctask() {
         // 开启async
-        new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+        new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
         // s说明是异步执行任务
-        new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+        new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
 
         new Thread(new Runnable() {
             @Override
             public void run() {
 //                new TestAsyncTask().execute("http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
-                new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
+                new TestAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "http://e.hiphotos.baidu.com/image/pic/item/48540923dd54564eaebe8b5dbede9c82d0584ffe.jpg");
             }
         }).start();
     }
@@ -52,6 +52,11 @@ public class ThreadActivity extends AppCompatActivity {
     public void intentservice() {
         // 启动IntentService
         startService(new Intent(this, TestIntentService.class));
+    }
+
+    @OnClick(R.id.count_down_latch)
+    public void testCountDownLatch() {
+        new CountDownLatchAsync().execute();
     }
 
     @Override
@@ -101,6 +106,21 @@ public class ThreadActivity extends AppCompatActivity {
             super.onPostExecute(s);
             Log.e(TAG, "onPostExecute: " + Thread.currentThread().getName());
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class CountDownLatchAsync extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            new TestCountDownLatch().test();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
         }
     }
 }

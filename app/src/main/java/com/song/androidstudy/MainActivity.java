@@ -20,6 +20,7 @@ import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
 import com.song.androidstudy.testcpp.TestCppActivity;
 import com.song.androidstudy.thread.ThreadActivity;
 import com.song.androidstudy.views.event.DispatchTouchEventActivity;
+import com.song.androidstudy.wifi.WifiActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button aidlBtn;
     @BindView(R.id.cpp)
     Button cppBtn;
+    @BindView(R.id.wifi)
+    Button wifiBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         unlockBtn = ((Button) findViewById(R.id.unlock));
 //        bitmapBtn = ((Button) findViewById(R.id.bitmap));
         threadBtn = ((Button) findViewById(R.id.thread));
+
         lifecycleBtn.setOnClickListener(this);
         networkBtn.setOnClickListener(this);
         eventBtn.setOnClickListener(this);
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         threadBtn.setOnClickListener(this);
         aidlBtn.setOnClickListener(this);
         cppBtn.setOnClickListener(this);
+        wifiBtn.setOnClickListener(this);
 
 //        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 //        String deviceId = telephonyManager.getDeviceId();
@@ -148,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.cpp:
                 startActivity(new Intent(MainActivity.this, TestCppActivity.class));
+            case R.id.wifi:
+                startActivity(new Intent(MainActivity.this, WifiActivity.class));
                 break;
 
         }

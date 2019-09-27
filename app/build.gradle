@@ -107,6 +107,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation group: 'cglib', name: 'cglib', version: '3.2.12'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 }
 repositories {
     mavenCentral()

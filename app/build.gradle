@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.song.androidstudy"
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -60,9 +60,9 @@ dependencies {
     configurations.all {
         exclude group: 'com.android.support', module: 'support-v13'
     }
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:design:28.0.0'
     // 所有测试基础junit
     testImplementation 'junit:junit:4.12'
     // android Instrumentation 测试runner
@@ -107,7 +107,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation group: 'cglib', name: 'cglib', version: '3.2.12'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 }
 repositories {
     mavenCentral()

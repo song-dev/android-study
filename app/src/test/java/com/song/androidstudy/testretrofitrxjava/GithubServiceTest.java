@@ -1,6 +1,6 @@
 package com.song.androidstudy.testretrofitrxjava;
 
-import android.arch.lifecycle.BuildConfig;
+import androidx.lifecycle.BuildConfig;
 import android.util.Log;
 
 import com.google.gson.Gson;

@@ -1,7 +1,7 @@
 package com.song.androidstudy;
 
 import android.app.Application;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 public class App extends Application {
 

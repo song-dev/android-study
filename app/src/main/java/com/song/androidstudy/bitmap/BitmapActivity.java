@@ -7,8 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.util.LruCache;
-import android.support.v7.app.AppCompatActivity;
+import androidx.collection.LruCache;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 

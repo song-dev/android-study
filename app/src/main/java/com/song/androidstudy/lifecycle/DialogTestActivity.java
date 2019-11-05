@@ -1,7 +1,7 @@
 package com.song.androidstudy.lifecycle;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.song.androidstudy.R;
 

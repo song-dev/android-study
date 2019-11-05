@@ -13,9 +13,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.VelocityTracker;
@@ -30,10 +27,14 @@ import android.widget.EditText;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.song.androidstudy.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

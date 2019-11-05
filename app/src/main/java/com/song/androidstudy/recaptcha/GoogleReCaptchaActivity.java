@@ -1,8 +1,6 @@
 package com.song.androidstudy.recaptcha;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 
@@ -16,6 +14,8 @@ import com.song.androidstudy.R;
 
 import java.util.concurrent.Executor;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

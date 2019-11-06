@@ -2,8 +2,7 @@ package com.song.androidstudy.xposed;
 
 import android.util.Log;
 
-import com.song.androidstudy.xposed.hook.JDHook;
-import com.song.androidstudy.xposed.hook.SMIDHook;
+import com.song.androidstudy.xposed.hook.JiGuangHook;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
@@ -23,8 +22,9 @@ public class MainHook implements IXposedHookLoadPackage {
         XposedBridge.log("Loaded app: " + lpparam.packageName);
         Log.e(TAG, "MainHook Loaded app: " + lpparam.packageName);
 
-        new SMIDHook(lpparam);
-        new JDHook(lpparam);
+//        new SMIDHook(lpparam);
+//        new JDHook(lpparam);
+        new JiGuangHook(lpparam);
 
     }
 }

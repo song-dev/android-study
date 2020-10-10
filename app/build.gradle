@@ -65,15 +65,15 @@ dependencies {
     configurations.all {
         exclude group: 'com.android.support', module: 'support-v13'
     }
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'com.google.android.material:material:1.2.1'
     // 所有测试基础junit
     testImplementation 'junit:junit:4.12'
     // android Instrumentation 测试runner
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     // UI测试框架 espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
     testImplementation 'org.mockito:mockito-core:2.21.0'
     // robolectric
@@ -93,14 +93,14 @@ dependencies {
     // 配合Rxjava 使用
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     // okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     // Android Permission
     implementation "org.permissionsdispatcher:permissionsdispatcher:4.5.0"
     annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0"
     // butterknife
-    implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     // disklrucache
     implementation 'com.jakewharton:disklrucache:2.0.2'
     // pem
@@ -113,7 +113,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation group: 'cglib', name: 'cglib', version: '3.2.12'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
 }

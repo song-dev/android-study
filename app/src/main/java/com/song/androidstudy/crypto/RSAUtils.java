@@ -36,62 +36,62 @@ import javax.crypto.IllegalBlockSizeException;
  */
 public class RSAUtils {
 
-    /**
-     * 加密解密模式
-     */
-    private static final String RSA_ALGORITHM = "RSA/ECB/PKCS1Padding";
-    /**
-     * 签名模式
-     */
-    private static final String RSA_SIGN_ALGORITHM = "SHA256withRSA";
-    /**
-     * 指定加密算法为RSA
-     */
-    private static final String ALGORITHM = "RSA";
-    /**
-     * 密钥长度，用来初始化
-     */
-    private static final int KEYSIZE = 1024;
-    /**
-     * PKCS1Padding加密快最大长度
-     */
-    public static final int MAX_ENCRYPT_BLOCK = 117;
-    /**
-     * 1024位key解密块最大长度
-     */
-    public static final int MAX_DECRYPT_BLOCK = 128;
+        /**
+         * 加密解密模式
+         */
+        private static final String RSA_ALGORITHM = "RSA/ECB/PKCS1Padding";
+        /**
+         * 签名模式
+         */
+        private static final String RSA_SIGN_ALGORITHM = "SHA256withRSA";
+        /**
+         * 指定加密算法为RSA
+         */
+        private static final String ALGORITHM = "RSA";
+        /**
+         * 密钥长度，用来初始化
+         */
+        private static final int KEYSIZE = 1024;
+        /**
+         * PKCS1Padding加密快最大长度
+         */
+        public static final int MAX_ENCRYPT_BLOCK = 117;
+        /**
+         * 1024位key解密块最大长度
+         */
+        public static final int MAX_DECRYPT_BLOCK = 128;
 
-    /**
-     * 生成RSA密钥对
-     *
-     * @return
-     */
-    public static Pair<String, String> getRSAPair() {
-        try {
+        /**
+         * 生成RSA密钥对
+         *
+         * @return
+         */
+        public static Pair<String, String> getRSAPair() {
+            try {
 
-            /** RSA算法要求有一个可信任的随机数源 */
-            SecureRandom secureRandom = new SecureRandom();
-            /** 为RSA算法创建一个KeyPairGenerator对象 */
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
-            /** 利用上面的随机数据源初始化这个KeyPairGenerator对象 */
-            keyPairGenerator.initialize(KEYSIZE, secureRandom);
-            /** 生成密匙对 */
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            /** 得到公钥 */
-            Key publicKey = keyPair.getPublic();
-            /** 得到私钥 */
-            Key privateKey = keyPair.getPrivate();
-            byte[] publicKeyBytes = publicKey.getEncoded();
-            byte[] privateKeyBytes = privateKey.getEncoded();
+                /** RSA算法要求有一个可信任的随机数源 */
+                SecureRandom secureRandom = new SecureRandom();
+                /** 为RSA算法创建一个KeyPairGenerator对象 */
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
+                /** 利用上面的随机数据源初始化这个KeyPairGenerator对象 */
+                keyPairGenerator.initialize(KEYSIZE, secureRandom);
+                /** 生成密匙对 */
+                KeyPair keyPair = keyPairGenerator.generateKeyPair();
+                /** 得到公钥 */
+                Key publicKey = keyPair.getPublic();
+                /** 得到私钥 */
+                Key privateKey = keyPair.getPrivate();
+                byte[] publicKeyBytes = publicKey.getEncoded();
+                byte[] privateKeyBytes = privateKey.getEncoded();
 
-            String publicKeyBase64 = Base64.encode(publicKeyBytes);
-            String privateKeyBase64 = Base64.encode(privateKeyBytes);
-            return new Pair<>(publicPem(publicKeyBase64), privateKeyBase64);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+                String publicKeyBase64 = Base64.encode(publicKeyBytes);
+                String privateKeyBase64 = Base64.encode(privateKeyBytes);
+                return new Pair<>(publicPem(publicKeyBase64), privateKeyBase64);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
-    }
 
     /**
      * 获取公钥对象,公钥只支持 X509EncodedKeySpec

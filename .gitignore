@@ -9,3 +9,7 @@
 /captures
 .externalNativeBuild
 .idea
+.cxx
+/gradle
+gradlew
+gradlew.bat

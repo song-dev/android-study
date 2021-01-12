@@ -2,6 +2,7 @@ package com.song.androidstudy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.song.androidstudy.gestureunlock.GestureUnlockActivity;
 import com.song.androidstudy.ipc.IPCTestActivity;
 import com.song.androidstudy.lifecycle.OneActivity;
 import com.song.androidstudy.permission.TestPermissionActivity;
+import com.song.androidstudy.preferences.PreferencesProviderUtils;
 import com.song.androidstudy.rxjavaretrofit.RetrofitRxjavaActivity;
 import com.song.androidstudy.testcpp.TestCppActivity;
 import com.song.androidstudy.thread.ThreadActivity;
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"mqBRboGZkQPcAkyk"));
 //        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"dxCRMxhQkdGePGnp"));
 //        Log.e(TAG, "onCreate: "+Settings.System.getString(getContentResolver(),"360DC_DeviceId_SerialNo"));
+
+        Log.e(TAG, "onCreate: " + PreferencesProviderUtils.getString(this.getApplicationContext(), "test", "test"));
 
     }
 

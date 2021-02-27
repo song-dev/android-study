@@ -40,14 +40,28 @@
         <activity
             android:name=".lifecycle.OneActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
-            android:launchMode="singleInstance" />
+            android:launchMode="standard" >
+            <intent-filter>
+                <action android:name="com.song.androidstudy.ipc.IPCService" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="topic"
+                    android:scheme="com.app.demo" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".lifecycle.TwoActivity"
-            android:launchMode="singleInstance" />
+            android:taskAffinity="com.song.android.single"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask" />
         <activity
             android:name=".lifecycle.DialogTestActivity"
             android:allowTaskReparenting="true"
-            android:launchMode="singleTask" /> <!-- android:theme="@style/MyDialogStyle" -->
+            android:theme="@style/MyDialogStyle"/> <!-- android:theme="@style/MyDialogStyle" -->
         <activity
             android:name=".views.event.LoginTestActivity"
             android:label="@string/title_activity_login_test" />

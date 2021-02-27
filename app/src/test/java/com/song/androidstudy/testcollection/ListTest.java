@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ListTest {
 
@@ -25,6 +26,8 @@ public class ListTest {
         list.remove(0);
         System.out.println(list.toString());
         System.out.println(list);
+
+        ListIterator<Integer> iterator = list.listIterator();
 
         List<Integer> objects = Collections.synchronizedList(list);
 

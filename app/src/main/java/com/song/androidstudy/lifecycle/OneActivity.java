@@ -1,7 +1,9 @@
 package com.song.androidstudy.lifecycle;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -54,7 +56,6 @@ public class OneActivity extends AppCompatActivity {
          * 示例：拨打电话、发送短信等
          */
 
-
     }
 
     @Override
@@ -67,7 +68,27 @@ public class OneActivity extends AppCompatActivity {
         sampletext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OneActivity.this, TwoActivity.class));
+                Log.e(TAG, "onClick: ");
+                // startActivity(new Intent(OneActivity.this, TwoActivity.class));
+                Intent intent = new Intent();
+                ComponentName componentName = new ComponentName("com.upuphone.starnote", "com.upuphone.note.recorder.service.SoundRecorderService");
+                intent.setComponent(componentName);
+                intent.setAction("com.upuphone.note.recorder.service.START");
+                intent.putExtra("type",1);
+                intent.putExtra("from","double_power");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(intent);
+                }
+                // bindService(intent, connection, BIND_AUTO_CREATE);
+                // 发送显示广播
+                // ComponentName componentName = new ComponentName("com.upuphone.starnote", "com.upuphone.note.recorder.receiver.PowerKeyBroadcastReceiver");
+                // Intent intent = new Intent();
+                // // intent.setComponent(componentName);
+                // intent.setAction("com.upuphone.note.recorder.receiver.test");
+                // // intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+                // intent.setPackage("com.upuphone.starnote");
+                // // sendBroadcast(intent, "com.upuphone.note.recorder.RECEIVER");
+                // sendBroadcast(intent);
             }
         });
     }

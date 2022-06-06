@@ -19,5 +19,6 @@ public class PowerKeyBroadcastReceiver extends BroadcastReceiver {
         if (Intent.ACTION_SCREEN_OFF.equals(action)) {
             Log.e("TAG", "onReceive: " + action);
         }
+        // test1
     }
 }

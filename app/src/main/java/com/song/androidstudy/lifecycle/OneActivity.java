@@ -89,6 +89,7 @@ public class OneActivity extends AppCompatActivity {
                 // intent.setPackage("com.upuphone.starnote");
                 // // sendBroadcast(intent, "com.upuphone.note.recorder.RECEIVER");
                 // sendBroadcast(intent);
+                // 2
             }
         });
     }
